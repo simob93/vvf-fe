@@ -1,0 +1,29 @@
+<!--<mat-tab-group>
+    <mat-tab label="Anagrafica">
+        <app-form-vigile [idVigile]="idVigile"></app-form-vigile>
+    </mat-tab>
+    <mat-tab label="Servizio">  
+        <app-list-servizio [idVigile]="idVigile"></app-list-servizio>
+    </mat-tab>
+</mat-tab-group>-->
+<app-toolbar-nav
+    title="Stai visualizzando le informazioni di: {{title}} ">
+</app-toolbar-nav>
+<nav mat-tab-nav-bar>
+    <div  *ngFor="let link of navLinks">
+        <a mat-tab-link
+        *permissionDirective="link.idMenu" 
+        [routerLink]="[link.path]"
+        [disabled] = "link.readOnly && hideTabServizio"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive">
+        {{link.label}}
+        </a>
+    </div>
+</nav>
+<div style="height: 85%; overflow: auto;">
+    <router-outlet></router-outlet>
+</div>
+
+<!---->
+<!---->

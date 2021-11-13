@@ -1,0 +1,45 @@
+<div style="width: 100%;">
+  <form [formGroup]="myForm" class="column_layout" style="margin-top: 0px;">
+    <div class="row_layout" style="margin-top: 8px;">
+      <button mat-raised-button [disabled]="myForm.dirty" color="primary"
+        (click)="onClickBtnNuovo()">{{'NUOVO' | translate}}</button>
+      <button mat-raised-button [disabled]="!myForm.get('id').value || myForm.dirty" color="primary"
+        (click)="onClickBtnElimina()">{{'ELIMINA' | translate}}</button>
+      <button mat-raised-button [disabled]="!myForm.dirty" color="primary"
+        (click)="onClickBtnRipristina()">{{'RIPRISTINA' | translate}}</button>
+      <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary"
+        (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+    </div>
+    <input matInput [hidden]="true" formControlName="id">
+    <div class="column_layout" style="margin-top: 15px;">
+      <input hidden formControlName="id">
+      <mat-form-field appearance="outline" style="width: 350px;">
+        <mat-label>{{'DESCRIZIONE' | translate}}</mat-label>
+        <input matInput placeholder="Descrizione articolo" formControlName="descrizione">
+      </mat-form-field>
+      <mat-form-field appearance="outline" style="width: 150px;">
+        <mat-label>{{'CODICE' | translate}}</mat-label>
+        <input matInput placeholder="Codice" formControlName="codice">
+      </mat-form-field>
+      <mat-checkbox formControlName="abilitaTaglia">{{'ABILITA_SCADENZA' | translate}}</mat-checkbox>
+      <mat-checkbox formControlName="abilitaScadenza">{{'ABILITA_GESTIONE_TAGLIE' | translate}}</mat-checkbox>
+    </div>
+  </form>
+  <mat-divider></mat-divider>
+  <div style="width: 100%; margin-top: 25px;">
+    <mat-tab-group  *ngIf="isValidID(this.myForm.get('id').value)" style="width: 100%;" >
+      <mat-tab label="Depositi">
+        <ng-template mat-tab-label>
+          <span [matBadge]="(dep.count || null)" matBadgeOverlap="false">{{'DEPOSITI' | translate}}</span>
+        </ng-template>  
+        <mag-articoli-depositi #dep></mag-articoli-depositi>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span [matBadge]="(cat.count || null)" matBadgeOverlap="false">{{'CATEGORIE' | translate}}</span>
+        </ng-template>  
+        <mag-articoli-categorie #cat></mag-articoli-categorie>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

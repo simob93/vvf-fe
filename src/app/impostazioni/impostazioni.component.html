@@ -1,0 +1,24 @@
+<app-toolbar-nav
+    title="Personalizzazioni/impostazioni">
+</app-toolbar-nav>
+<div style="display: flex; height: 90%; ">
+    <div style="height: 100%;">
+        <mat-list dense>
+            <h3 mat-subheader>Voci generali</h3>
+            <mat-list-item *ngFor="let area of listAree" 
+                [routerLink]="['area', area.id]" 
+                routerLinkActive
+                #routerLinkActiveInstance="routerLinkActive"
+                [class.list-item-active]="routerLinkActiveInstance.isActive"
+                [queryParams] ="{ manage_expiry: area.manageExpiry }"
+                queryParamsHandling="merge">
+
+                <mat-icon mat-list-icon>folder</mat-icon>
+                <h4 mat-line>{{area.name}}</h4>
+            </mat-list-item>
+        </mat-list>
+    </div>
+    <div style="flex: 1; height: 100%;">
+        <router-outlet></router-outlet>
+    </div>
+</div>

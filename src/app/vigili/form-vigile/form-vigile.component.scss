@@ -1,0 +1,21 @@
+.remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.input_base_class {
+  margin: 5px;  
+}
+
+.column_layout {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.row_layout {
+  display: flex;
+  flex-direction: row;
+}
+

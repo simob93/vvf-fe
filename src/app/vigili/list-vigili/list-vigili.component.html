@@ -1,0 +1,81 @@
+
+<app-toolbar-nav
+    title="Gestione Anagrafiche">
+</app-toolbar-nav>
+<div>
+    <div style="display: flex; flex-direction: row; align-items: baseline;">
+        <form [formGroup]="searchForm">
+            <mat-form-field appearance="fill" style="margin-top: 3px;">
+                <input formControlName="nominativo" matInput placeholder="Ricerca vigile...">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </form>
+        <span class="fill-remaining-space"></span>
+        <button mat-flat-button color="primary" [routerLink]="['vigile', 0]" *permissionDirective="COD_VIDEATA_ANAGRAFICA">
+            <mat-icon aria-label="Nuovo vigile">add</mat-icon>
+            Nuovo vigile
+        </button>
+        <button (click)="onClickBtnPrint()"  mat-flat-button color="primary" style="margin-left: 5px;">
+            <mat-icon aria-label="Cerca">print</mat-icon>
+            Stampa
+        </button>
+    </div>
+    <table style="width: 100%;" mat-table [dataSource]="listVigili" class="mat-elevation-z1">
+        <!-- Position Column -->
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef  style="width: 150px;"> Nominativo </th>
+            <td mat-cell *matCellDef="let vigile">
+                <div style="display: flex; align-items: center;">
+                    <ngx-avatar
+                        size="40"
+                        [name]="vigile.firstName + ' ' + vigile.lastName"
+                        [bgColor]="vigile.color"
+                        [round]="true">
+                    </ngx-avatar>
+                    <span style="margin-left: 15px">{{vigile.firstName + ' ' + vigile.lastName}}</span>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef style="width: 150px;">Email</th>
+                <td mat-cell *matCellDef="let vigile">  {{ vigile.mail}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef style="width: 150px;">Indirizzo</th>
+                <td mat-cell *matCellDef="let vigile">  {{ vigile.address}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="birthday">
+                <th mat-header-cell *matHeaderCellDef style="width: 100px;"> Data di nascita </th>
+                <td mat-cell *matCellDef="let vigile">  {{ vigile.birthday | date: 'dd/MM/yyyy' }}  </td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef style="width: 120px;">Telefono (Principale)</th>
+                <td mat-cell *matCellDef="let vigile">  
+                    {{ vigile.phone}}  
+
+                </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="width: 60px;"> Azioni </th>
+                <td mat-cell *matCellDef="let vigile">
+                    <button (click)="onClickDeleteVigile(vigile)" mat-icon-button color="warn">
+                        <mat-icon aria-label="Eliminazione">delete</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" *permissionDirective="COD_VIDEATA_ANAGRAFICA">
+                        <mat-icon [routerLink]="['vigile', vigile.id]"  aria-label="Visualizza dettaglio">arrow_forward</mat-icon>
+                    </button>
+                </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator
+        [length]="total"
+        [pageSize]="limit"
+        (page)="goToPage($event)">
+    </mat-paginator>
+</div>
+
+

@@ -1,0 +1,32 @@
+<div style="height: 100%; width: 100%;">
+<mat-sidenav-container style="height: 100%; width: 100%;">
+  <mat-sidenav mode="side" opened style="width: 200px;">
+    <mat-list dense> 
+      <div mat-subheader class="list-header-style">{{'DEPOSITI' | translate}}</div>
+      <mat-list-item 
+        *ngFor="let deposito of DEPOSITO" 
+        routerLinkActive
+		    #routerLinkActiveInstance="routerLinkActive"
+		    [class.list-item-mag-active]="routerLinkActiveInstance.isActive"
+        routerLink="{{deposito.link}}">
+        <mat-icon mat-list-icon>{{deposito.icon}}</mat-icon>
+        <div mat-line>{{deposito.name | translate}}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <div mat-subheader class="list-header-style">{{'CATALOGO_ARTICOLI' | translate}}</div>
+      <mat-list-item 
+        *ngFor="let catalogoArt of CATALOGO" 
+        routerLink="{{catalogoArt.link}}"
+        routerLinkActive
+		    #routerLinkActiveInstance="routerLinkActive"
+		    [class.list-item-mag-active]="routerLinkActiveInstance.isActive">
+        <mat-icon mat-list-icon>{{catalogoArt.icon}}</mat-icon>
+        <div mat-line>{{catalogoArt.name | translate}}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content style="background: #fff;">
+   <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+</div>

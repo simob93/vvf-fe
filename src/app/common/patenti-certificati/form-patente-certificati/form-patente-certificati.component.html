@@ -1,0 +1,37 @@
+
+<form #patente = "ngForm" style="margin-top: 8px;">
+   
+    <mat-form-field appearance="outline" class="margin-right" *ngIf="mode == 0" >
+        <mat-label>Codice patente</mat-label>
+        <input [(ngModel)]="item.number" name="number" matInput placeholder="Codice patente" required>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="margin-right" style="width: 220px;">
+        <mat-label>Tipo</mat-label>
+        <mat-select [(ngModel)]="item.idPerson" name="idPerson" required>
+            <mat-option 
+              *ngFor="let patente of listaPerson" 
+              [value]="patente.id">{{patente.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" style="width: 180px;">
+        <mat-label>Data di esecuzione</mat-label>
+        <input  matInput [matDatepicker]="picker"  placeholder="Data di esecuzione" [(ngModel)]="item.date" name="date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 180px;" class="margin-left" *ngIf=" (item.id < 0 || item.id == null)" >
+            <mat-label>Data di scadenza</mat-label>
+            <input matInput [matDatepicker]="picker2"  placeholder="Data di scadenza" [(ngModel)]="item.dateExpiration" name="dateExpiration">
+            <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+            <mat-hint align="start"><strong>Se compilato verrà creata una scadenze...</strong> </mat-hint>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+    <button mat-mini-fab color="warn" (click)="onClickBtnRemove(item)" class="margin-left">
+        <mat-icon aria-label="Delete">remove</mat-icon>
+    </button>
+  </form>

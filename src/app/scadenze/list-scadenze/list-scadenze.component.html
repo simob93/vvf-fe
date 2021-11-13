@@ -1,0 +1,31 @@
+<div style="display: flex; flex-direction: column; align-items: stretch;">
+    <div style="display: flex;">
+        <mat-form-field appearance="outline"  style="margin-left: 5px;" >
+            <mat-label>Tipologia</mat-label>
+            <mat-select [(ngModel)]="type" >
+                <mat-option *ngFor="let tipo of tipologia" 
+                [value]="tipo.id">{{tipo.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="storico" style="margin-left: 5px;">Visualizza storico</mat-checkbox>
+        <span class="fill-remaining-space" style="margin-left: 8px;">
+            <button mat-flat-button color="primary" (click) ="fetchData()">
+                <mat-icon aria-label="Cerca">find_in_page</mat-icon>
+            Trova
+            </button>
+        </span>
+    </div>
+    <mat-divider></mat-divider>
+    <div style="margin-top: 5px;">
+        <button mat-flat-button color="primary" (click) ="onClickBtnNuovo()">
+            <mat-icon aria-label="Nuovo vigile">add</mat-icon>
+            Nuova scadenza
+        </button>
+    </div>
+    <app-main-list 
+        (onClickEditScadenza)="onClickEditScadenza($event)" 
+        (onClickRenewScadenza)="onClickRenewScadenza($event)"
+        (onClickDeleteScadenza)="onClickDeleteScadenza($event)"
+        [listScadenze]="listScadenze">
+    </app-main-list>
+    

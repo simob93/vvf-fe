@@ -1,0 +1,34 @@
+<div style="height: 90%; " class="row_layout">
+  <div>
+    <table style="width: 500px;" mat-table [dataSource]="listCarriera$ | async" class="mat-elevation-z1">
+      <ng-container matColumnDef="dal">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px;">Data dal</th>
+              <td mat-cell *matCellDef="let carriera">  {{carriera.dal | date: 'dd/MM/yyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="al">
+              <th mat-header-cell *matHeaderCellDef style="width: 150px;">Data al</th>
+              <td mat-cell *matCellDef="let carriera">  {{carriera.al | date: 'dd/MM/yyy'}}  </td>
+      </ng-container>
+      <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> Tipo </th>
+              <td mat-cell *matCellDef="let carriera">  {{carriera.tipoFormatted}} </td>
+      </ng-container>
+      
+     
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row 
+      (click)="onClickEdit(row)"
+      [ngClass]="{'highlight': selectedRowIndex == row.id}"
+      *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  
+  </div>
+  <mat-divider style="margin: 0px 15px 0px 15px;" [vertical]="true"></mat-divider>
+  <app-form-mansioni 
+      (afterOperation)="onAfterOperation()"
+      [idVigile]="idVigile" 
+      [record]="recCarriera"
+      style="margin-left: 8px;width: 600px">
+  </app-form-mansioni> 
+</div> 

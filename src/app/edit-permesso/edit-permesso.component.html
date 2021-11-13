@@ -1,0 +1,26 @@
+<div>
+  <h1>Gestione permesso</h1>
+  <div [formGroup]="myForm" class="column_layout">
+    <mat-form-field appearance="outline"  style="margin-left: 5px;" [hidden]="true" >
+      <mat-label>idMenu</mat-label>
+      <input matInput placeholder="id" formControlName="id" >
+    </mat-form-field>
+    <mat-form-field appearance="outline"  style="margin-left: 5px;" >
+      <mat-label>Voce menu</mat-label>
+      <input matInput placeholder="Voce menu" formControlName="voceMenu" >
+    </mat-form-field>
+    <mat-form-field appearance="outline"  style="margin-left: 5px;">
+      <mat-label>Permesso</mat-label>
+      <mat-select formControlName="permesso" >
+          <mat-option *ngFor="let permesso of permessiCbox$ | async" [value]="permesso.valore">{{permesso.extra}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span class="fill-remaining-space"></span>
+      <button mat-raised-button color="primary" (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="onClickBtnEsci()">{{'ESCI' | translate}}</button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

@@ -1,0 +1,18 @@
+<div style="display: flex; flex: 1; flex-direction: column; align-items: center;">
+    <div style="width: 1024px; margin-top: 20px;">
+        <app-patenti-certificati
+            title="Patenti di servizio"
+            [idVigile]="idVigile"
+            [listItem]="patentiStandard"
+            [listPerson]="patentiServizio"
+            (onRemoveElement)="onRemovePatente($event)"
+        >
+        </app-patenti-certificati>
+        <mat-toolbar style="margin-top: 8px;">
+            <mat-toolbar-row>
+                <span class="fill-remaining-space"></span>
+                <button mat-raised-button color="primary" class="success" (click)="onClickConferma()">Conferma</button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+</div>

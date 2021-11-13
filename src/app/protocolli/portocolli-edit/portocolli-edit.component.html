@@ -1,0 +1,155 @@
+<h2 mat-dialog-title>Gestione Protocolli</h2>
+<mat-dialog-content>
+<div style="display: flex; flex: 1; flex-direction: column; align-items: center;">
+    <form  [formGroup]="myForm" style="width: 1000px;">
+        <div>
+            <label>(*) Campi obbligatori</label>
+        </div>
+        <div style="display: flex;">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo</mat-label>
+                <mat-select  formControlName="type">
+                    <mat-option *ngFor="let type of listType$ | async" [value]="type.codice">{{type.valore}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="margin-left" >
+                    <mat-label>Tipologia di comunicazione</mat-label>
+                    <mat-select formControlName="idTypology" >
+                        <mat-option *ngFor="let typology of listTypology$ | async" [value]="typology.codice">{{typology.valore}}</mat-option>
+                    </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="margin-left" >
+                    <mat-label>Data Reg.</mat-label>
+                    <input matInput [matDatepicker]="picker3" placeholder="Data di Registrazione" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline" class="margin-left" >
+                    <mat-label>Data Protocollo.</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Data Protocollo" formControlName="dateProtocol">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+
+        </div>
+        <div style="display: flex;">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Data Protocollo Mit.</mat-label>
+                    <input matInput [matDatepicker]="picker2" placeholder="Data Protocollo Mit." formControlName="dateProtocolIn">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="margin-left width-lg">
+                  <mat-label>Ente</mat-label>
+                  <input type="text"
+                           placeholder="Ricerca Enti...."
+                           matInput
+                           #txtDescEnte
+                           formControlName="idOrganization"
+                           [matAutocomplete]="auto2">
+                    <mat-autocomplete [displayWith]="displayFn"  #auto2="matAutocomplete">
+                      <mat-option *ngFor="let org of (listEnti$ | async) | filterOn: 'name' : myForm.get('idOrganization').value" [value]="org">
+                        {{org.name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+        </div>
+
+        <div style="display: flex;">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Nr. Faldone</mat-label>
+                    <input type="text"
+                           placeholder="Nr faldone"
+                           matInput
+                           #txtNumFaldone
+                           formControlName="_tmp_archives"
+                           [matAutocomplete]="auto3">
+                    <mat-autocomplete [displayWith]="displayNrFaldoneFn"  #auto3="matAutocomplete">
+                      <mat-option *ngFor="let archive of (listFaldoni$| async) | filterOn: 'extra' : myForm.get('_tmp_archives').value" [value]="archive">
+                        {{archive.extra}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="margin-left width-lg">
+                    <mat-label>Faldone</mat-label>
+
+                    <input type="text"
+                           placeholder="Ricerca faldone...."
+                           matInput
+                           #txtDescFaldone
+                           formControlName="idArchive"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete [displayWith]="displayFn"  #auto="matAutocomplete">
+                      <mat-option *ngFor="let archive of (listFaldoni$| async) | filterOn: 'name' : myForm.get('idArchive').value" [value]="archive">
+                        {{archive.name}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+        </div>
+
+        <div style="display: flex; align-items: stretch; flex: 1; flex-direction: column;">
+            <!--<div [froalaEditor]  [(froalaModel)]="protocol.object"></div> !-->
+            <mat-form-field  appearance="outline" >
+                <textarea matInput placeholder="Oggetto"  formControlName="object" style=" height: 120px;"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div style="display: flex; margin-top: 10px;">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Via</mat-label>
+                <input matInput placeholder="Via" formControlName="address" >
+            </mat-form-field>
+            <div  *ngIf="!data?.protocol?.converted">
+                <mat-form-field appearance="outline" class="margin-left">
+                    <mat-label>Provincia</mat-label>
+                    <mat-select formControlName="istatProvincia">
+                        <mat-option *ngFor="let citta of listProvincie$ | async" [value]="citta.istat">{{citta.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="margin-left">
+                    <mat-label>Comune</mat-label>
+                    <mat-select formControlName="istatComune">
+                        <mat-option *ngFor="let comune of listComuni$ | async" [value]="comune.istat">{{comune.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div *ngIf="data?.protocol?.converted">
+                    <mat-form-field appearance="outline"  class="margin-left">
+                            <mat-label>Citta</mat-label>
+                            <input matInput placeholder="Citta" formControlName="oldCitta">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="margin-left">
+                            <mat-label>Provincia</mat-label>
+                            <input matInput placeholder="Provincia" formControlName="oldProvincia">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="margin-left">
+                            <mat-label>Nazione</mat-label>
+                            <input matInput placeholder="Nazione" formControlName="oldNazione">
+                    </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="margin-left" style="width: 70px;">
+                <mat-label>Cap</mat-label>
+                <input matInput placeholder="Cap" formControlName="cap">
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button color="primary" [disabled]="myForm.invalid" (click)="onClickBtnSave()">Conferma</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Chiudi</button>
+</mat-dialog-actions>

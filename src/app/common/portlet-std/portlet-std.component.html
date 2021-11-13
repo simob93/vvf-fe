@@ -1,0 +1,29 @@
+<mat-expansion-panel   hideToggle expanded="true" hideToggle="false" [ngClass]="classStyle">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+        <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+            <img *ngIf="!!icon" width="34"  height="34" src="assets/images/general/{{icon}}" align="center"/>
+            <span style="margin-left: 8px;">{{title}}</span>
+        </div>
+    </mat-panel-title>
+    <mat-panel-description *ngIf="false">
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <ng-content select="[pnl-content]" [ngStyle]="{'height.px': height || 'auto'}" ></ng-content>
+  <ng-content select="[pnl-toolbar]"></ng-content>
+</mat-expansion-panel>
+
+<!--
+<mat-card style="height: 280px;" >
+  <mat-card-title style="font-size: 16px;"></mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+      <div style="height: 180px; width: 100%; overflow: auto;">
+
+
+      </div>
+      <mat-card-actions *ngIf="showBtnLink">
+
+      </mat-card-actions>
+  </mat-card-content>
+</mat-card> -->

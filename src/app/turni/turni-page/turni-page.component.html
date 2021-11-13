@@ -1,0 +1,37 @@
+<div style="height: 85%; background: #fff;">
+    <form [formGroup]="myForm" style="padding: 8px;">
+        <mat-form-field appearance="outline">
+            <mat-label>Dal</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="dal" formControlName="dal" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-left: 10px;">
+            <mat-label>Al</mat-label>
+            <input matInput [matDatepicker]="picker2" [matDatepickerFilter]="filterDate" placeholder="al"
+                formControlName="al" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="onClickBtnSearch()">
+            <mat-icon>search</mat-icon>Cerca Turni
+        </button>
+        <button style="margin-left: 10px;" mat-raised-button color="primary" (click)="onClickBtnPrint()">
+            <mat-icon>print</mat-icon>Stampa
+        </button>
+    </form>
+    <div class="border-bottom-default" style="text-align: center;">
+        <h2>Squadra di servizio: {{squadraTurno | async}}</h2>
+        <h3>Periodo di servizio: {{getMonday(myForm.get('dal').value) | date: 'dd/MM/yyy' }} -
+            {{getSunday(myForm.get('al').value) | date: 'dd/MM/yyy' }}</h3>
+    </div>
+    <div
+        style="display: flex; flex-direction: column; overflow: scroll; align-items: center;  margin-top: 5px; height: 90%;">
+        <div style="width:90%">
+
+            <ag-grid-angular style="width: 100%; height: 600px;" class="ag-theme-material"
+                [rowData]="(listTurni$ | async)" [columnDefs]="displayedColumns">
+            </ag-grid-angular>
+        </div>
+    </div>
+</div>

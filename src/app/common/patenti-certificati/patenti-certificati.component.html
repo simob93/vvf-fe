@@ -1,0 +1,20 @@
+<div style="display: flex; flex: 1; flex-direction: column; align-items: center;">
+    <div style="width: 1024px; margin-top: 20px;">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{title}}</mat-card-title>
+                <span class="fill-remaining-space"></span>
+                <button mat-flat-button color="primary" (click)="onClickBtnNew()">
+                    <mat-icon aria-label="Nuovo">add</mat-icon>
+                    Aggiungi
+                </button>
+            </mat-card-header>
+            <app-form-patente-certificati 
+                *ngFor="let item of listItem" 
+                [mode]="mode" 
+                [item]="item" 
+                (onRemoveElement)="onRemoveElement($event)" 
+                [listaPerson]="listPerson"></app-form-patente-certificati>
+        </mat-card>
+    </div>
+</div>

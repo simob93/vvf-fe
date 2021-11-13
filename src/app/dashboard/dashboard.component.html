@@ -1,0 +1,75 @@
+<mat-drawer-container style="height: 100%;">
+    <mat-divider></mat-divider>
+    
+    <mat-drawer #drawer opened mode="side" style="padding: 8px;">
+        
+        <div>
+            <app-flat-list-vigili
+                (itemClick)="refreshDasboard($event)">
+            </app-flat-list-vigili>
+        </div>
+
+    </mat-drawer>
+    <mat-drawer-content>
+        <div style="display: flex; flex-direction: row; height: 100%;">
+    
+            <div style="display: flex; flex-direction: column; flex: 1; margin-left: 5px; background: #fff;">
+                <mat-card style="margin-bottom: 8px; margin-top: 8px;">
+                    <div style="display: flex; flex-direction: row;">
+                        <img matListAvatar src="assets/images/general/avatar_list.svg" alt="..." width="64">
+                        <mat-divider style="margin: 0px 15px 0px 15px;" [vertical]="true"></mat-divider>
+                        <div style="display: flex; flex-direction: row; flex: 1; justify-content: space-between;">
+                            <div style="display: flex; margin-left: 10px; flex-direction: column; line-height: 2.0;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <mat-label class="bold label-info-genreali">{{'NOME' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.firstName}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'COGNOME' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.lastName}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'DATA_NASCITA' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.birthday | date: 'd/MM/yyyy'}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'CODICE_FISCALE' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.fiscalCode}}</mat-label>
+                                </div>
+                                <div  style="display: flex; justify-content: space-between;">
+                                    <mat-label class="bold label-info-genreali">{{'VIA' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.address}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'CITTA' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.town?.nome}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'PROVINCIA' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.district?.nome}}</mat-label>                        
+                                    <mat-label class="bold label-info-genreali">{{'TELEFONO' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.phone}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'EMAIL' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile.mail}}</mat-label>
+                                </div>
+                                <div  style="display: flex;">
+                                    <mat-label class="bold label-info-genreali">{{'GRADO' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile?.servizio?.gradoFormatted}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'MANSIONE' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile?.mansione?.tipoFormatted}}</mat-label>
+                                    <mat-label class="bold label-info-genreali">{{'SQUADRA' | translate}}:</mat-label>
+                                    <mat-label class="label-info-genreali">{{vigile?.servizio?.teamFormatted}}</mat-label>
+                                </div>
+                            </div>
+                            <div *ngIf="vigile?.assente" style="display: flex; text-align: center; width: 160px; flex-direction: column; justify-content: center; align-items: center; " class="color-base">
+                                <img 
+                                    width="64"
+                                    src="assets/images/general/alert.svg" 
+                                />                
+                                <p>{{'VIGILE_ASSENTE_DAL_SERVIZIO' | translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card>
+                <div style="height: 100%;">   
+                    <div *ngIf="noVigileSel" style="display: flex; height: 100%; font-size: 18px; align-items: center; justify-content: center; font-weight: bold;">
+                        <span><mat-icon style="color: dodgerblue; vertical-align: middle; margin-right: 5px;">info</mat-icon>Nessun vigile selezionato.....</span>
+                    </div>
+                    <router-outlet *ngIf="!noVigileSel"></router-outlet>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+

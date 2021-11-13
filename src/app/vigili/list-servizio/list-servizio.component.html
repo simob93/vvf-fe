@@ -1,0 +1,69 @@
+<div class="row_layout">
+<div>
+<table style="width: 100%;margin-top: 3px;" mat-table [dataSource]="listServizi" class="mat-elevation-z1">
+    <!-- Position Column -->
+    <ng-container matColumnDef="dateStart">
+        <th mat-header-cell *matHeaderCellDef style="width: 140px;"> Data di inizio </th>
+        <td mat-cell *matCellDef="let servizio">
+                {{servizio.dateStart  | date: 'dd/MM/yyy HH:mm' }}
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="dateEnd">
+            <th mat-header-cell *matHeaderCellDef  style="width: 140px;"> Data di fine </th>
+            <td mat-cell *matCellDef="let servizio"> 
+                 {{ servizio.dateEnd | date: 'dd/MM/yyy HH:mm'  }}  
+            </td>
+    </ng-container>
+    <ng-container matColumnDef="grado">
+        <th mat-header-cell *matHeaderCellDef  style="width: 180px;"> Grado </th>
+        <td mat-cell *matCellDef="let servizio"> 
+             {{ servizio.gradoFormatted }}  
+        </td>
+</ng-container>
+    <ng-container matColumnDef="letter">
+            <th mat-header-cell *matHeaderCellDef  style="width: 80px;"> Lettera </th>
+            <td mat-cell *matCellDef="let servizio"> 
+                 {{ servizio.letter }}  
+            </td>
+    </ng-container>
+    <ng-container matColumnDef="idTeam">
+            <th mat-header-cell *matHeaderCellDef  style="width: 80px;"> Squadra </th>
+            <td mat-cell *matCellDef="let servizio"> 
+                 {{ servizio.teamFormatted }}  
+            </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row 
+        (click)="onClickEdit(row)"
+        [ngClass]="{'highlight': selectedRowIndex == row.id}"
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+</table>
+</div>
+<mat-divider style="margin: 0px 15px 0px 15px;" [vertical]="true"></mat-divider>
+<div style="height: 100%;">
+    <mat-tab-group color="primary">
+        <mat-tab label="Gestione squadre">
+            <app-form-servizio
+                (afterOperation)="onAfterOperation()"
+                [idVigile]="idVigile" 
+                [record]="recServizio"
+                style="margin-left: 8px; height: 80%; width: 600px"
+            >
+            </app-form-servizio>
+        </mat-tab>
+        <mat-tab  label="Gestione gradi"  
+            *ngIf="recServizio?.id != null"  
+            style="height:300px;">
+            <app-list-gradi
+                style="height: 100%;"
+                (afterOperation)="onAfterOperation()"
+                [idServizio]="recServizio?.id"
+                [idVigile]="idVigile"
+            ></app-list-gradi>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+</div>

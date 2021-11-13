@@ -1,0 +1,13 @@
+
+
+<div class="row_layout" style="height: 100%; width: 90%;  margin-left: 15px;">
+  <mag-depositi-list #depositiList
+    (selectionChange)="onSelectionChange($event)"
+  >
+</mag-depositi-list>
+  <mag-depositi-form #depositoForm
+    (afterDelete)="onAfterDelete()"
+    (afterSave)="onAfterSave($event)"
+    style="margin-left: 10px;">
+  </mag-depositi-form>
+</div>

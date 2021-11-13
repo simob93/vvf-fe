@@ -1,0 +1,10 @@
+<div style="width: 90%; height: 100%; margin-left: 15px;" class="row_layout">
+  <mag-categorie-list #categorieList
+    (selectionChange)="onSelectionChange($event)"
+  >
+  </mag-categorie-list>
+  <mag-categorie-form #categorieForm style="margin-left: 15px;"
+    (afterDelete)="onAfterDelete()"
+    (afterSave)="onAfterSave($event)">
+  </mag-categorie-form>
+</div>

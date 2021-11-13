@@ -1,0 +1,51 @@
+
+<mat-card-title>{{'RICERCA_AVANZATA' | translate}}</mat-card-title>
+<form [formGroup]="myForm" class="column_layout">
+  <div class="column_layout">
+    <mat-form-field appearance="outline">
+      <mat-label>{{'DATA_DAL' | translate}}</mat-label>
+      <input matInput [matDatepicker]="picker1" placeholder="Data dal" formControlName="dal">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{'DATA_AL' | translate}}</mat-label>
+      <input matInput [matDatepicker]="picker2" placeholder="Data al" formControlName="al">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label> {{'FALDONE' | translate}}</mat-label>
+      <input type="text"
+              placeholder="Nr faldone"
+              matInput
+              autocomplete="disabled"
+              formControlName="faldone"
+              [matAutocomplete]="auto3">
+      <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let faldone of (listFaldoni$| async) | filterOn: 'custom' : myForm.get('faldone').value" [value]="faldone">
+          {{faldone.custom}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="flex:1">
+      <mat-label>{{'OGGETTO' | translate}}</mat-label>
+      <input matInput placeholder="Oggetto" formControlName="oggetto">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="margin-left: 5px;">
+      <mat-label> {{'TIPOLOGIA' | translate}}</mat-label>
+      <mat-select formControlName="tipologia">
+        <mat-option *ngFor="let ruolo of listTipologie$ | async" [value]="ruolo.valore">{{ ruolo.extra }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="outline" style="flex:1">
+    <mat-label> {{'NUMERO' | translate}}</mat-label>
+    <input matInput placeholder="N° protocollo" formControlName="numeroProtocollo">
+  </mat-form-field>
+  <div style="display: flex; justify-content: flex-end;">
+    <button mat-raised-button color="primary" (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+    <button mat-raised-button color="primary" (click)="onClickBtnRipristina()">{{'RIPRISTINA_FILTRI' | translate}}</button>
+  </div>
+</form>

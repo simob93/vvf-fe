@@ -1,0 +1,47 @@
+
+ <app-loader></app-loader>
+ <app-message></app-message>
+ <mat-toolbar color="primary">
+     <mat-toolbar-row>
+         <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+         <img
+             width="34px;"
+             src="assets/images/general/flame.svg" />
+
+         <span>{{'TITLE_GESTIONALE' | translate}}</span><span style="font-size: small;margin-left: 3px;"> V. {{versioneProgramma$ | async}}</span>
+
+         <span class="fill-remaining-space"></span>
+
+       <div *ngIf="isLogged" style="display: flex;">
+            <a mat-button>Ciao, {{username}} <mat-icon (click)="onClickLogOut()">logout</mat-icon></a>    
+        </div>
+        <div *ngIf="!isLogged" style="display: flex;">
+            <a mat-button [routerLink]="['login']" routerLinkActive="router-link-active" >Area riservata</a>
+        </div>
+     </mat-toolbar-row>
+ </mat-toolbar>
+
+ <mat-sidenav-container class="sidenav-container">
+     <mat-sidenav #snav mode="over" fixedTopGap="64" style="padding: 6px;">
+        <mat-list>
+        <div *ngFor="let btn of sideNavMenu">
+            <mat-list-item  (click)="snav.toggle()" routerLink="{{btn.link}}" *permissionDirective="btn.idMenu; mostraSempre: btn.mostraSempre" >
+                <h4 mat-list-icon  mat-line >
+                    <img
+                        src="assets/images/general/{{btn.image}}"
+                        width="32"
+                    />
+                </h4>
+                <h4 mat-line>{{btn.title | translate }}</h4>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </div>
+        </mat-list>
+        
+     </mat-sidenav>
+     <div class="footer"></div>
+     <mat-sidenav-content class="sidenav-content">
+         <router-outlet></router-outlet>
+     </mat-sidenav-content>
+     
+ </mat-sidenav-container>

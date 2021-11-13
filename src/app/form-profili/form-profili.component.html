@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-title>{{'PROFILI_PERMESSI' | translate}}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="myForm" class="column_layout" style="width: 1024px; margin-top: 0px;">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <span class="fill-remaining-space"></span>
+          <button mat-raised-button [disabled]="myForm.dirty" color="primary" (click)="onClickBtnNuovo()">{{'NUOVO' | translate}}</button>
+          <button mat-raised-button [disabled]="!myForm.get('id').value || myForm.dirty" color="primary" (click)="onClickElimina()">{{'ELIMINA' | translate}}</button>
+          <button mat-raised-button [disabled]="!myForm.dirty" color="primary" (click)="onClickBtnRipristina()">{{'RIPRISTINA' | translate}}</button>
+          <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary" (click)="onClickConferma()">{{'CONFERMA' | translate}}</button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <input matInput [hidden]="true" formControlName="id">
+      <div class="column_layout" style="margin-top: 15px;">
+        <input hidden formControlName="id">
+        <mat-form-field appearance="outline">
+          <mat-label>{{'DESCRIZIONE_RUOLO' | translate}}</mat-label>
+          <input matInput placeholder="Descrizione ruolo" formControlName="descrizione">
+        </mat-form-field>
+      </div>
+    </form>
+    <div style="margin-top: 20px;"></div>
+    <div *ngIf="(listPermessi$ | async).length > 0">
+      <h2 class="mat-card-title">{{'VOCI_DI_MENU' | translate}}</h2>
+      <!--Grid voci menu   -->
+      <ag-grid-angular style="height: 300px;" *ngIf="(listPermessi$ | async).length > 0" class="ag-theme-material" 
+        
+        [rowData]="(listPermessi$ | async)" 
+        [getRowNodeId]="getRowNodeId"
+        [rowSelection]="'single'" 
+        (cellClicked)="onCellClicked($event)"
+        (gridReady)="onGridReady($event)" 
+        [columnDefs]="displayedColumns">
+      </ag-grid-angular>
+    </div>
+  </mat-card-content>
+</mat-card>

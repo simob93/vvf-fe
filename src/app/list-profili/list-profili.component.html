@@ -1,0 +1,11 @@
+
+<div style="height: 100%;">
+  <ag-grid-angular style="width: 250px; height: 100%;" class="ag-theme-material"
+      [rowHeight]="35"
+      [getRowNodeId]="getRowNodeId"
+      [rowSelection]="'single'"
+      (selectionChanged)="onSelectionChanged($event)"
+      (gridReady)="onGridReady($event)"
+      [columnDefs]="displayedColumns">
+    </ag-grid-angular>
+</div>

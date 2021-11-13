@@ -1,0 +1,9 @@
+{
+    "/vvf/*": {
+      "target": "http://localhost:8200",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true,
+      "pathRewrite": {"^/vvf" : ""}
+    }
+  }

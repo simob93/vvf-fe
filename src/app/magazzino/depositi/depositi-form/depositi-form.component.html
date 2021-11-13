@@ -1,0 +1,17 @@
+<form [formGroup]="myForm" class="column_layout" style="margin-top: 0px;">
+  <div class="row_layout" style="margin-top: 8px;">
+    <button mat-raised-button [disabled]="myForm.dirty" color="primary" (click)="onClickBtnNuovo()">{{'NUOVO' | translate}}</button>
+    <button mat-raised-button [disabled]="!myForm.get('id').value || myForm.dirty" color="primary" (click)="onClickBtnElimina()">{{'ELIMINA' | translate}}</button>
+    <button mat-raised-button [disabled]="!myForm.dirty" color="primary" (click)="onClickBtnRipristina()">{{'RIPRISTINA' | translate}}</button>
+    <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary" (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+  </div>
+  <input matInput [hidden]="true" formControlName="id">
+  <div class="column_layout" style="margin-top: 15px;">
+    <input hidden formControlName="id">
+    <mat-form-field appearance="outline">
+      <mat-label>{{'DESCRIZIONE' | translate}}</mat-label>
+      <input matInput placeholder="Descrizione deposito" formControlName="descrizione">
+    </mat-form-field>
+    <mat-checkbox formControlName="attivo">{{'ATTIVO' | translate}}</mat-checkbox>
+  </div>
+</form>

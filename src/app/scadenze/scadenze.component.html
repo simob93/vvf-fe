@@ -1,0 +1,75 @@
+<div style="height: 100%;">
+    <app-toolbar-nav
+        title="Gestione Scadenze">
+    </app-toolbar-nav>
+    <mat-card>
+        <div [formGroup]="searchForm" style="display: flex;">
+            <mat-form-field appearance="outline" style="flex: 1;">
+                <mat-select placeholder="Filtra tabella per...." multiple formControlName="columns">
+                    <mat-option *ngFor="let person of listPerson"  [value]="person.id">{{person.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div style="display: flex;">
+            <button (click)="onClickFiltra()" mat-flat-button color="primary">
+                <mat-icon aria-label="Cerca">filter_list</mat-icon>
+                Filtra
+            </button>
+            <button  mat-flat-button [matMenuTriggerFor]="menu" color="primary" style="margin-left: 5px;">
+                <mat-icon aria-label="Cerca">print</mat-icon>
+                Stampa
+            </button>
+            <mat-menu #menu="matMenu">
+                <button  (click)="onClickPrint()" mat-menu-item>Stampa scadenze</button>
+                <button (click)="onClickPrintAutorizz()" mat-menu-item>Stampa autorizzazioni</button>
+            </mat-menu>
+        </div>
+    </mat-card>
+    <div style="margin-top: 5px; height: 70%; overflow: auto;">
+
+
+        <ag-grid-angular
+            style="width: 100%; height: 600px;"
+            class="ag-theme-material border"
+            [rowData]="dataSource"
+            [columnDefs]="displayedColums"
+        >
+        </ag-grid-angular>
+
+       <!-- <table style="width: 100%;" mat-table [dataSource]="dataSource" >
+            <ng-container  matColumnDef="nominativo">
+                <th mat-header-cell *matHeaderCellDef  style="width: 250px;">Nominativo</th>
+                <td mat-cell *matCellDef="let col">
+                    <span style="padding-left: 8px;">
+                        {{col.nominativo}}
+                    </span>
+                </td>
+            </ng-container>
+            <ng-container *ngFor="let column of listColumns" [matColumnDef]="column.valore">
+                <th mat-header-cell *matHeaderCellDef style="width: 50px; text-align:center;"> {{column.extra}} </th>
+                <td mat-cell *matCellDef="let col" style=" text-align:center;" (click)="onClickCell(col[column.valore])">
+                    <img *ngIf="col[column.valore]"
+                        [matTooltip]="col[column.valore].dateExpiration"
+                        align="center"
+                        width="24"
+                        height="24"
+                        src="assets/images/time-left-{{(col[column.valore].stato == 1 ? 'green' : (col[column.valore].stato == 0 ? 'orange' : 'red')) }}.svg" />
+                </td>
+            </ng-container>
+            <ng-container  *ngFor="let columnHeader of listHeaderGroup"  [matColumnDef]="columnHeader.descrizioneArea" >
+                <th mat-header-cell *matHeaderCellDef
+                    style="text-align: center;"
+                    [attr.colspan]="columnHeader.span">
+                {{columnHeader.descrizioneArea}}
+                </th>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumsHeaderGroup; sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColums; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColums;"></tr>
+
+        </table> -->
+    </div>
+</div>
+

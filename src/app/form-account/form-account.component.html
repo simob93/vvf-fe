@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-title>Gestione Account utente</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="myForm"  class="column_layout" style="width: 1024px; margin-top: 0px;">
+        <input matInput [hidden]="true"  formControlName="id">
+        <div class="column_layout">
+          <input hidden formControlName="id">
+          <mat-form-field appearance="outline">
+              <mat-label>{{'NOME' | translate}}</mat-label>
+              <input matInput placeholder="Nome"  formControlName="nome">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+              <mat-label>{{'COGNOME' | translate}}</mat-label>
+              <input matInput placeholder="Cognome" formControlName="cognome">
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="flex:1">
+            <mat-label>{{'EMAIL' | translate}}</mat-label>
+            <input matInput placeholder="Email" formControlName="email" >
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="flex:1">
+            <mat-label> {{'USERNAME' | translate}}</mat-label>
+            <input matInput placeholder="Username" formControlName="username" >
+          </mat-form-field>
+          <div formGroupName="ruolo">
+            <input [hidden]="true" formControlName="idUtente" >
+            <input [hidden]="true" formControlName="id" >
+            <mat-form-field appearance="outline"  style="margin-left: 5px;">
+              <mat-label> {{'RUOLO_PROFILO' | translate}}</mat-label>
+              <mat-select  formControlName="idRuolo">
+                  <mat-option *ngFor="let ruolo of listRuoli$ | async" [value]="ruolo.codice">{{ ruolo.valore }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <button mat-raised-button color="primary" *ngIf="isValidId && myForm.get('abilitato')?.value" (click)="onClickBtnDisabilita()">{{'DISABILITA' | translate}}</button>
+          <button mat-raised-button color="verde" *ngIf="isValidId && !myForm.get('abilitato')?.value" (click)="onClickBtnAbilita()">{{'ABILITA' | translate}}</button>
+          <button mat-raised-button color="arancio" *ngIf="isValidId" (click)="onClickBtnResetPassword()">Reset password</button>
+        </div>
+        <mat-toolbar>
+          <mat-toolbar-row>
+                <span class="remaining-space"></span>
+                <button mat-raised-button color="primary" (click)="onClickBtnNuovo()">{{'NUOVO' | translate}}</button>
+                <button mat-raised-button color="primary" (click)="onClickBtnElimina()">{{'ELIMINA' | translate}}</button>
+                <button mat-raised-button color="primary" (click)="onClickBtnRipristina()">{{'RIPRISTINA' | translate}}</button>
+                <button mat-raised-button color="primary" (click)="onClickConferma()">{{'CONFERMA' | translate}}</button>
+            </mat-toolbar-row>
+        </mat-toolbar>
+      </form>
+  </mat-card-content>
+</mat-card>

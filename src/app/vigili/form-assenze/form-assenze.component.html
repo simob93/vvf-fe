@@ -1,0 +1,47 @@
+<h3>Gestione movimenti</h3>
+<form [formGroup]="myForm" class="column_layout">
+    
+    <input type="text" formControlName="id" [hidden]="true" />
+    <input type="text" formControlName="idVigile" [hidden]="true" />
+    <div class="row_layout">
+        <mat-form-field appearance="outline">
+            <mat-label>Data dal</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Data dal"  formControlName="dal" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Dalle</mat-label>
+            <input matInput type="time" placeholder="Dalle"  formControlName="dalle" />
+        </mat-form-field>
+    </div>
+    <div class="row_layout">
+        <mat-form-field appearance="outline">
+            <mat-label>Al</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="Data al" formControlName="al">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>alle</mat-label>
+            <input matInput type="time" placeholder="alle"  formControlName="alle" />
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" style="flex:1">
+        <mat-label>Motivo assenza</mat-label>
+        <mat-select formControlName="motivo">
+            <mat-option *ngFor="let motivo of listMotivi$ | async " [value]="motivo.id">{{motivo.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="flex:1">
+        <mat-label>Eventuali note aggiuntive</mat-label>
+        <textarea matInput placeholder="Note aggiuntive" formControlName="note"></textarea>
+    </mat-form-field>
+    <mat-toolbar>
+            <span class="remaining-space"></span>
+            <button [disabled]="myForm.dirty" mat-raised-button color="primary" (click)="onClickBtnNuovo()"><mat-icon>add</mat-icon>Nuovo</button>
+            <button [disabled]="(!myForm.dirty) || (!myForm.valid)" mat-raised-button color="primary"  (click)="onClickBtnConferma()"  ><mat-icon>done</mat-icon>Conferma</button>
+            <button  [disabled]="myForm.dirty" mat-raised-button color="primary" (click)="onClickBtnElimina()"><mat-icon>delete_forever</mat-icon>Elimina</button>
+            <button [disabled]="!myForm.dirty" mat-raised-button color="primary" (click)="onClickBtnRipristina()"><mat-icon>replay</mat-icon>Ripristina</button>
+    </mat-toolbar>
+</form>

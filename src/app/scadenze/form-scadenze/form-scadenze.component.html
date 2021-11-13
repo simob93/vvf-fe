@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Gestione scadenze {{inputTitle}}</h2>
+<mat-dialog-content style="width: 400px;">
+    <form #scadenzaForm="ngForm" style="margin-top: 10px; display: flex; flex-direction: column;">
+
+        <mat-radio-group aria-label="Select an option" [(ngModel)]="scadenza.idArea" name="tipo" (change) ="onChangeRadioTipo($event)" [disabled]= "data?.renew">
+            <mat-radio-button *ngFor="let person of listAree" [value]="person.id" >{{person.name}}</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field  appearance="outline">
+            <mat-label>Descrizione</mat-label>
+            <mat-select (selectionChange)="onSelChangeSelectScadenze($event)" [disabled]="data?.renew" [(ngModel)]="scadenza.idRiferimento" name="idRiferimento" >
+                <mat-option *ngFor="let item of listCboxScadenze" [value]="item.codice">{{item.valore}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field  appearance="outline">
+            <input (dateChange)="onChangeDataRinnovo($event)" matInput [matDatepicker]="picker2" placeholder="Data di rinnovo" [(ngModel)]="scadenza.dateFrom" name="dateFrom">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field  appearance="outline">
+            <input matInput [matDatepicker]="picker3" placeholder="Data di scadenza" [(ngModel)]="scadenza.dateExpiration" name="dateExpiration">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field  appearance="outline">
+            <textarea matInput placeholder="Note"  [(ngModel)]="scadenza.note" name="note"></textarea>
+        </mat-form-field>
+            
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button color="primary" (click)="onClickConferma(scadenza)">Conferma</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Chiudi</button>
+</mat-dialog-actions>

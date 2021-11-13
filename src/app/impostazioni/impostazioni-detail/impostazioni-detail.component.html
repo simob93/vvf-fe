@@ -1,0 +1,47 @@
+<div style="display: flex;">
+    <span class="fill-remaining-space"></span>
+    <button  mat-raised-button color="primary" (click)="onClickAddVoce()">
+        <mat-icon aria-label="Nuova voce">add</mat-icon>
+        Aggiungi
+    </button>
+</div>
+
+
+<div style="height: 85%; overflow: auto;">
+    
+    <mat-form-field>
+        <mat-label>Ricerca....</mat-label>
+        <input matInput placeholder="Rircerca...." #searchField>
+    </mat-form-field>
+    <table style="width: 100%; margin-top: 15px;" mat-table [dataSource]=" (listRisposte$ | async ) | filterOn: 'name' : searchField.value">
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef style="flex: 1"> Descrizione </th>
+            <td mat-cell *matCellDef="let person">
+                {{person.name}} {{ !!person.extra ? "(" + person.extra  + ")": ''}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="expirationEvery">
+            <th mat-header-cell *matHeaderCellDef style="width: 150px;">Ogni quanto</th>
+            <td mat-cell *matCellDef="let person">{{person.scadenza && person.scadenza.expirationEvery}} </td>
+        </ng-container>
+        <ng-container matColumnDef="expirationType">
+            <th mat-header-cell *matHeaderCellDef style="width: 150px;">Tipo di scadenza</th>
+            <td mat-cell *matCellDef="let person">{{person.scadenza && person.scadenza.expirationTypeFormatted}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="width: 120px;"> Azioni </th>
+            <td mat-cell *matCellDef="let person"> 
+                <button (click)="onClickBtnDelete(person)" mat-icon-button color="warn">
+                    <mat-icon aria-label="Eliminazione">delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="onClickBtnDetail(person)" >
+                    <mat-icon  aria-label="Visualizza dettaglio">visibility</mat-icon>
+                </button>    
+            </td>
+    </ng-container>
+        <tr mat-header-row *matHeaderRowDef="getDisplayedColumns();sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+
+    </table>
+</div>

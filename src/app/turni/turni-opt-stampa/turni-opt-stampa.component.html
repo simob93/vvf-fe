@@ -1,0 +1,16 @@
+<h3>Inserisci il periodo da stampare</h3>
+<form [formGroup]="myForm">
+  <mat-form-field appearance="outline">
+  <mat-label>Dal</mat-label>
+  <input matInput [matDatepicker]="picker"  placeholder="dal" formControlName="dal" />
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline" style="margin-left: 10px;">
+      <mat-label>Al</mat-label>
+      <input matInput [matDatepicker]="picker2"  placeholder="al" formControlName="al" />
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+  <button style="margin-left: 10px;"  mat-raised-button color="primary" (click)="onClickBtnPrint()"><mat-icon>print</mat-icon>Stampa</button>
+</form>

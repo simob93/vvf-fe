@@ -1,0 +1,43 @@
+<mat-dialog-content style="width: 400px;">
+    <form [formGroup]="myForm" style="margin-top: 10px; display: flex; flex-direction: column;">
+
+        <input matInput formControlName="id" [hidden]="true">
+        <input matInput formControlName="idArea" [hidden]="true">
+
+        <mat-form-field appearance="outline"  [hidden]="!getShowExtraField()">
+            <mat-label>Extra</mat-label>
+            <input matInput placeholder="Extra" formControlName="extra">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Descrizione</mat-label>
+            <input matInput placeholder="Descrizione" formControlName="name">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="enabledExpiry" [hidden]="!showCbScadenza()" style="margin-left: 5px;">Abilita scadenza</mat-checkbox>
+        
+        <div formGroupName="scadenza" [hidden]="!myForm.get('enabledExpiry').value">
+
+            <input matInput formControlName="id" [hidden]="true">
+            <input matInput formControlName="idPerson" [hidden]="true">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Scadenza ogni</mat-label>
+                <input matInput type="number" placeholder="Ogni" formControlName="expirationEvery">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo scadenza</mat-label>
+                <mat-select formControlName="expirationType">
+                    <mat-option *ngFor="let item of [{codice: 'A', valore: 'Annuale'}, {codice: 'M', valore: 'Mensile'}]" [value]="item.codice">{{item.valore}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button color="primary" (click)="onClickConferma()">Conferma</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Chiudi</button>
+</mat-dialog-actions>

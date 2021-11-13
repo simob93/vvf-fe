@@ -1,0 +1,75 @@
+<div style="height: 100%;">
+<app-toolbar-nav title="Gestione Protocolli"></app-toolbar-nav>
+<div class="row_layout" style="padding: 4px;">
+    <span class="fill-remaining-space"></span>
+    <button mat-flat-button color="primary" (click)="onClickBtnAdd()">
+        <mat-icon aria-label="Nuovo protocollo">add</mat-icon>
+        Nuovo protocollo
+    </button>
+    <button mat-flat-button color="arancio" (click)="onClickBtnRicercaAvanzata()">
+        <mat-icon aria-label="Nuovo protocollo">search</mat-icon>
+        Ricerca avanzata
+    </button>
+</div>
+<div style="height:70%;overflow: auto; margin-top: 7px;">
+<table style="width: 100%;" mat-table [dataSource]="listProtocolli" class="mat-elevation-z1">
+    <!-- Position Column -->
+    <ng-container matColumnDef="type" >
+        <th mat-header-cell *matHeaderCellDef style="width:34px !important; max-width: 34px !important;"> Tipo(E/U) </th>
+        <td mat-cell *matCellDef="let protocol"  style="width:34px !important; max-width: 34px !important;"> 
+            <div style="display: flex; align-items: center;  ">
+                <span [ngStyle]="{'background': protocol.type == 'E' ? 'yellowgreen' : 'brown'}" style="
+                height: 34px;
+                width: 34px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-weight: bold;
+                border-radius: 50%;">
+                    {{protocol.type.toUpperCase()}}
+                </span>
+            </div>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="strUid">
+        <th mat-header-cell *matHeaderCellDef style="width:34px !important; max-width: 34px !important;">Numero </th>
+        <td mat-cell *matCellDef="let protocol"> {{ protocol.strUid}} </td>
+    </ng-container>
+    <ng-container matColumnDef="descrFaldone">
+        <th mat-header-cell *matHeaderCellDef style="width: 60px;">Faldone</th>
+        <td mat-cell *matCellDef="let protocol"> {{ protocol.descrFaldone}} </td>
+    </ng-container>
+    <ng-container matColumnDef="dateProtocol">
+        <th mat-header-cell *matHeaderCellDef style="width:34px !important; max-width: 34px !important;">Data protocollo</th>
+        <td mat-cell *matCellDef="let protocol"> {{ protocol.date | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="object">
+        <th mat-header-cell *matHeaderCellDef style="width: 120px;">Oggetto </th>
+        <td mat-cell *matCellDef="let protocol"> {{ protocol.object}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="width: 60px;"> Azioni </th>
+            <td mat-cell *matCellDef="let protocol">
+                <button (click)="onClickBtnDeleteProt(protocol)" mat-icon-button color="warn">
+                    <mat-icon aria-label="Eliminazione">delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="onClickBtnDetail(protocol)" >
+                    <mat-icon  aria-label="Visualizza dettaglio">visibility</mat-icon>
+                </button>
+            </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+</div>
+<mat-paginator [length]="total" [pageSize]="maxResult" (page)="goToPage($event)">
+</mat-paginator>
+
+
+</div>

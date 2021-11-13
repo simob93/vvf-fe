@@ -1,0 +1,18 @@
+
+
+<ng-container *ngIf="showResetPassword; else login">
+			<app-reset-password-form (goToLogin)="showResetPassword = false" ></app-reset-password-form>
+</ng-container>
+
+<ng-template #login>
+
+  <form [formGroup]="myForm">
+    <h1>{{'AUTENTICAZIONE' | translate}}</h1>
+    <span>{{'IMMETTI_CREDENZIALI' | translate}}</span>
+    <input type="text" placeholder="Username" formControlName="username" />
+    <input type="password" placeholder="Password" formControlName="password" />
+    <a  (click)="onClickResetPassword()" >{{'PASSWORD_DIMENTICATA' | translate}}</a>
+    <button (click)="onClickBtnLogin()">{{'ACCEDI' | translate}}</button>
+  </form>
+</ng-template>
+

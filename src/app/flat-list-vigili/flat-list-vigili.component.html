@@ -1,0 +1,39 @@
+<h1 style="font-size: 16px;">Elenco vigili ({{info.total}})</h1>
+<div style="display:flex; flex-direction: column; position: sticky; top:0; background: #fff;z-index: 99999;">
+	<form [formGroup]="myForm">
+		<mat-form-field appearance="fill" style="margin-top: 3px;">
+			<input formControlName="nominativo" matInput placeholder="Ricerca vigile...">
+			<mat-icon matSuffix>search</mat-icon>
+		</mat-form-field>
+		<div style="display:flex; flex-direction: column;">
+			<mat-checkbox formControlName="assenti">Mostra vigili assenti</mat-checkbox>
+			<mat-checkbox formControlName="nonAttivi">Non attivi</mat-checkbox>
+			<mat-form-field appearance="outline" [hidden]="myForm.get('nonAttivi').value">
+				<mat-select placeholder="Seleziona squadra..." formControlName="idSquadra">
+					<mat-option [value]="''">Tutte le squadra</mat-option>
+					<mat-option *ngFor="let item of listSquadre$ | async" [value]="item.id">{{item.name}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</form>
+</div>
+<mat-divider></mat-divider>
+<mat-list dense>
+	<mat-list-item
+		*ngFor="let vigile of filteredList"
+		(click) ="onItemClick(vigile)"
+		[class.list-item-active]="vigile.id == (vigileSel && vigileSel.id)">
+		<h4 mat-list-icon>
+			<ngx-avatar
+				size="40"
+				[name]="vigile.firstName + ' ' + vigile.lastName"
+				[bgColor]="vigile.color"
+				[round]="true">
+			</ngx-avatar>
+
+		</h4>
+		<h4 mat-line style="margin-left: 15px">{{vigile.firstName + ' ' + vigile.lastName}}</h4>
+		<h4 *ngIf="vigile.idAssenza" mat-line style="margin-left: 15px; color:red;">{{'Vigile assente'}}</h4>
+	</mat-list-item>
+</mat-list>
+

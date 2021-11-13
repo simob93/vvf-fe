@@ -1,0 +1,31 @@
+<div style="width: 100%; font-size: small;">
+  <form [formGroup]="myForm" class="column_layout" style="margin-top: 0px;">
+    <div class="row_layout" style="margin-top: 8px;">
+      <button btn-small mat-raised-button color="primary"
+        (click)="onClickBtnNuovo()" >{{'NUOVO' | translate}}</button>
+      <button btn-small mat-raised-button color="primary" [disabled]="!isDirty"  (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+    </div>
+    <div class="column_layout" style="margin-top: 15px;">
+      <div *ngIf="(myForm.get('articoliDepositi').value?.length == 0)">
+          <p>{{'ARTICOLO_VISIBILE_TUTTI_DEPOSITI' | translate}}</p>
+      </div>
+      <div *ngFor="let control of array_depositi.controls; index as i" formArrayName="articoliDepositi" style="display: flex;">
+        <div [formGroupName]="i">
+          <input type="text" hidden formControlName="id">
+          <mat-form-field appearance="fill" style="width: 350px;">
+            <mat-label>{{'DEPOSITO' | translate}} </mat-label>
+            <input type="text" formControlName="deposito" placeholder="Deposito" aria-label="Deposito" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let deposito of depositi$  | async" [value]="deposito">
+                {{deposito.descrizione}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeDeposito(i)" >
+            <mat-icon>delete</mat-icon>
+        </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

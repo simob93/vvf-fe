@@ -1,0 +1,13 @@
+<nav mat-tab-nav-bar>
+  <div *ngFor="let link of navLinks">
+      <a mat-tab-link
+      [routerLink]="[link.path]"
+      routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive">
+      {{link.label | translate}}
+      </a>
+  </div>
+</nav>
+<div style="height: 85%; overflow: auto;">
+  <router-outlet></router-outlet>
+</div>

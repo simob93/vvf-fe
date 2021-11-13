@@ -1,0 +1,139 @@
+<div *ngIf="state.isFetching" class="overlay-custom">
+    <div class="modal-custom">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; margin: 10px;">
+    
+    <form [formGroup]="myForm"  class="column_layout" style="width: 1024px; margin-top: 15px;">
+        <div style="margin-bottom: 20px;">
+            <mat-card-title>Anagrafica vigile</mat-card-title>
+        </div>
+        <input matInput [hidden]="true"  formControlName="id">
+        <div style="display: flex; flex: 1;">
+            <!--<img src="assets/images/general/avatar_list.svg" alt="..." width="128" align="center" />-->
+            <div style="display: flex;  flex-direction: row;margin-left: 4px;">
+                <mat-form-field appearance="outline" style="flex:1;">
+                    <mat-label>Nome</mat-label>
+                    <input matInput placeholder="Nome"  formControlName="firstName">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="flex:1; margin-left: 5px;">
+                    <mat-label>Cognome</mat-label>
+                    <input matInput placeholder="Cognome" formControlName="lastName">
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline" style="margin-left: 10px;">
+                <mat-label>Data di nascita</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Data di nascita" formControlName="birthday">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="row_layout" style="flex: 1">
+                <div style="display: flex; flex: 0.5; margin-left: 8px;" hidden>
+                    <mat-checkbox formControlName="noSaltoTurno">Non permettere il salto turno</mat-checkbox>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex;">
+            <div style="display: flex; flex-direction: column; flex: 1; ">
+                <div style="display: flex; flex-direction: row;">
+                    <mat-form-field appearance="outline" style="flex:1">
+                            <mat-label>Telefono (Principale)</mat-label>
+                            <input matInput placeholder="Telefono (Principale)" formControlName="phone">
+                    </mat-form-field>
+                    <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="phones?.length >= 4" (click)="addCustomField(phones)" aria-label="Aggiungi campo telefono">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div *ngFor="let control of phones.controls; index as i" formArrayName="extra_phone" style="display: flex;">
+                    <mat-form-field appearance="outline" style="flex: 1;">
+                        <mat-label>Telefono</mat-label>
+                        <input matInput placeholder="Telefono" [formControl]="phones.controls[i]">
+                    </mat-form-field>
+                    <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(phones, i)" aria-label="Elimina campo email">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <!--<button (click)="removeSkill(i)">X</button>-->
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex;">
+            <mat-form-field appearance="outline" style="flex:1">
+                <mat-label>Patenti civili</mat-label>
+                <mat-select formControlName="listDrivingLicenses" multiple>
+                    <mat-option *ngFor="let patente of patenti$ | async " [value]="patente.id">{{patente.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div style="display: flex; flex-direction: column; ">
+            <div style="display: flex; flex-direction: row;">
+                <mat-form-field appearance="outline" style="flex:1;">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" formControlName="mail" >
+                </mat-form-field>
+                <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="emails?.length >= 4" (click)="addCustomField(emails)" aria-label="Aggiungi campo email">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>      
+            <div *ngFor="let control of emails.controls; index as i" formArrayName="extra_mail" style="display: flex;">
+                <mat-form-field appearance="outline" style="flex: 1;">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" [formControl]="emails.controls[i]">
+                </mat-form-field>
+                <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(emails, i)" aria-label="Elimina campo email">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <!--<button (click)="removeSkill(i)">X</button>-->
+            </div>
+        </div>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Codice fiscale</mat-label>
+            <input matInput placeholder="Codice fiscale" formControlName="cf">
+        </mat-form-field>
+
+        <div style="display: flex;">
+
+            <mat-form-field appearance="outline" style="flex:1">
+                <mat-label>Via e numero civico</mat-label>
+                <input matInput placeholder="Via e numero civico" formControlName="address">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="flex:1">
+                <mat-label>Provincia</mat-label>
+                <mat-select  formControlName="istatProvincia">
+                    <mat-option *ngFor="let citta of listCity$ | async" [value]="citta.istat">{{citta.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="flex:1">
+                    <mat-label>Comune</mat-label>
+                    <mat-select formControlName="istatComune">
+                        <mat-option *ngFor="let comune of listTown$ | async" [value]="comune.istat">{{comune.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 75px;">
+                <mat-label>Cap</mat-label>
+                <input matInput placeholder="Cap" formControlName="postalCode">
+            </mat-form-field>
+
+        </div>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Codice telefonico</mat-label>
+            <input matInput placeholder="Codice telefonico" formControlName="codPhone">
+        </mat-form-field>
+
+        <mat-toolbar>
+                <mat-toolbar-row>
+                    <span class="remaining-space"></span>
+                    <button mat-raised-button color="primary" (click)="onClickConferma()">Conferma</button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+    </form>
+</div>
