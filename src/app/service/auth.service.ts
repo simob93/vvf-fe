@@ -50,7 +50,7 @@ export class AuthService {
      * @param idRuolo 
      */
     getPermissionByRole(idRuolo) {
-        return this.http.get<JsonResponse<RuoliPermissiTree>>('vvf/ruoli/permessi/tree', {
+        return this.http.get<JsonResponse<RuoliPermissiTree>>('/vvf/ruoli/permessi/tree', {
             params: {
                 idRuolo
             }
