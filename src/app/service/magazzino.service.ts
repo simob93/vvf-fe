@@ -34,14 +34,19 @@ export class MagazzinoService {
      * 
      * @param attivi 
      */
-    listArticoli(attivi) {
+    listArticoli(attivi, descr='', idDeposito = null, idCategoria=null) {
 
         let params = {};
-        if (attivi) {
-            Object.assign(params, {
-                attivi
-            })
+        if (descr) {
+            Object.assign(params, {descr})
         }
+        if (idDeposito) {
+            Object.assign(params, {idDeposito})
+        }
+        if (idCategoria) {
+            Object.assign(params, {idCategoria})
+        }
+
         return this.http.get<JsonResponse<Articolo[]>>('/vvf/mag/articoli/list', {
             params
         });

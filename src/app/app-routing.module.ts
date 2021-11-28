@@ -29,7 +29,7 @@ import { MagazzinoPageComponent } from './magazzino/magazzino-page/magazzino-pag
 import { CategoriePageComponent } from './magazzino/articoli/categorie/categorie-page/categorie-page.component';
 import { DepositiPageComponent } from './magazzino/depositi/depositi-page/depositi-page.component';
 import { ArticoliPageComponent } from './magazzino/articoli/catalogo/articoli-page/articoli-page.component';
-import { EquipaggioPageComponent } from './equipaggio/equipaggio-page/equipaggio-page.component';
+import { DotazionePageComponent } from './dotazione/dotazione-page/dotazione-page.component';
 
 
 const navigationVigile: Routes = [
@@ -188,8 +188,8 @@ const routes: Routes = [
 				component: ListScadenzeComponent
 			},
 			{
-				path: 'equipaggio',
-				component: EquipaggioPageComponent
+				path: 'dotazione',
+				component: DotazionePageComponent
 			}
 		]
 	}

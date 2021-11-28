@@ -85,6 +85,11 @@
     "CATEGORIA":"Categoria",
     "ARTICOLO_VISIBILE_TUTTI_DEPOSITI": "Articolo visibile in tutti i depositi",
     "DEPOSITO": "Deposito",
-    "EQUIPAGGAMENTO":"Equipaggiamento"
+    "EQUIPAGGAMENTO":"Equipaggiamento",
+    "DATA_CONSEGNA":"Data consegna",
+    "QUANTITA":"Quantita",
+    "ARTICOLO":"Articolo",
+    "AGGIUNGI_ARTICOLO": "Aggiungi articolo",
+    "TAGLIA": "Taglia"
 
 }

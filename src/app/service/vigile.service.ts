@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import {
     HttpClient
@@ -7,7 +8,7 @@ import {
 } from '../model/vigile';
 import { Observable } from 'rxjs';
 import { PatentiServizio } from '../model/patentiServizio';
-import { Certificati } from '../model';
+import { Certificati, Dotazione, JsonResponse } from '../model';
 import * as moment from 'moment';
 import 'moment/locale/it';
 
@@ -36,6 +37,10 @@ export class VigileService {
             }
         });
     }
+    /**
+     * 
+     * @param params 
+     */
     listV2(params): Observable<Vigile[]> {
         return this.http.get<Vigile[]>('/vvf/vigili/list', {
             params: params
@@ -126,6 +131,55 @@ export class VigileService {
     delete(id:number) {
         return this.http.get<Vigile>(`/vvf/vigili/${id}/delete`);
     }
+    /**
+     * 
+     * @param idVigile 
+     */
+    listDotazioniCbox(idVigile): Observable<JsonResponse<Dotazione[]>> {
+        return this.http.get<JsonResponse<Dotazione[]>>(`/vvf/vigili/dotazione/cbox`, {
+            params: {
+                idVigile
+            }
+        });
+    }
+    /**
+     * 
+     * @param idReg 
+     * @returns 
+     */
+    getDotazioneById(idReg): Observable<JsonResponse<Dotazione>> {
+        return this.http.get<JsonResponse<Dotazione>>(`/vvf/vigili/dotazione/get`, {
+            params: {
+                id:idReg
+            }
+        });
+    }
+    /**
+     * 
+     * @param dotazione 
+     */
+    saveDotazione(dotazione: Dotazione): Observable<JsonResponse<Dotazione>> {
+        return this.http.post<JsonResponse<Dotazione>>(`/vvf/vigili/dotazione/save`, dotazione);
+    }
+    /**
+     * 
+     * @param dotazione 
+     */
+    updateDotazione(dotazione: Dotazione): Observable<JsonResponse<Dotazione>> {
+        return this.http.post<JsonResponse<Dotazione>>(`/vvf/vigili/dotazione/update`, dotazione);
+    }
+    /**
+     * 
+     * @param id 
+     */
+    deleteDotazione(id): Observable<JsonResponse<Dotazione>> {
+        return this.http.get<JsonResponse<Dotazione>>(`/vvf/vigili/dotazione/delete`, {
+            params: {
+                id
+            }
+        });
+    }
+
     print(): any {
         return this.http.post<Blob>(`/vvf/vigili/report`, null, {observe: 'response', responseType: 'blob' as 'json'}).subscribe((res) => {
             let blob = new Blob([res.body], { type: 'application/pdf' });

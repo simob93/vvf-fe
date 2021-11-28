@@ -18,4 +18,5 @@ export {Articolo} from './articolo';
 export {Categoria} from './categoria';
 export {ArticoloCategoria} from './articoloCategoria';
 export {ArticoloDeposito} from './articoloDeposito';
+export {Dotazione} from './dotazione';
 

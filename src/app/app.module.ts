@@ -108,9 +108,9 @@ import { ArticoliListComponent } from './magazzino/articoli/catalogo/articoli-li
 import { ArticoliCategorieComponent } from './magazzino/articoli/catalogo/articoli-categorie/articoli-categorie.component';
 import { ArticoloSharedService } from './service/articolo-shared.service';
 import { ArticoliDepositiComponent } from './magazzino/articoli/catalogo/articoli-depositi/articoli-depositi.component';
-import { EquipaggioPageComponent } from './equipaggio/equipaggio-page/equipaggio-page.component';
-import { EquipaggioListComponent } from './equipaggio/equipaggio-list/equipaggio-list.component';
-import { EquipaggioFormComponent } from './equipaggio/equipaggio-form/equipaggio-form.component';
+import { DotazionePageComponent } from './dotazione/dotazione-page/dotazione-page.component';
+import { DotazioneListComponent } from './dotazione/dotazione-list/dotazione-list.component';
+import { DotazioneFormComponent } from './dotazione/dotazione-form/dotazione-form.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/language/', '.json');
@@ -194,9 +194,9 @@ export function createTranslateLoader(http: HttpClient) {
         ArticoliListComponent,
         ArticoliCategorieComponent,
         ArticoliDepositiComponent,
-        EquipaggioPageComponent,
-        EquipaggioListComponent,
-        EquipaggioFormComponent
+        DotazionePageComponent,
+        DotazioneListComponent,
+        DotazioneFormComponent
     ],
     imports: [
         FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),

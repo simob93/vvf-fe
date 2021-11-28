@@ -1,0 +1,55 @@
+<div style="width: 100%;">
+  <form [formGroup]="myForm" class="column_layout" style="margin-top: 0px;">
+    <div class="row_layout" style="margin-top: 8px;">
+      <button mat-raised-button [disabled]="myForm.dirty" color="primary"
+        (click)="onClickBtnNuovo()">{{'NUOVO' | translate}}</button>
+      <button mat-raised-button [disabled]="!myForm.get('id').value || myForm.dirty" color="primary"
+        (click)="onClickBtnElimina()">{{'ELIMINA' | translate}}</button>
+      <button mat-raised-button [disabled]="!myForm.dirty" color="primary"
+        (click)="onClickBtnRipristina()">{{'RIPRISTINA' | translate}}</button>
+      <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary"
+        (click)="onClickBtnConferma()">{{'CONFERMA' | translate}}</button>
+    </div>
+
+    <input matInput [hidden]="true" formControlName="id">
+    <input matInput [hidden]="true" formControlName="idVigile">
+
+    <div class="column_layout" style="margin-top: 15px;">
+      <input hidden formControlName="id">
+      <mat-form-field appearance="outline" style="width: 150px;">
+        <mat-label>{{'DATA_CONSEGNA' | translate}}</mat-label>
+        <input matInput [matDatepicker]="picker3" placeholder="Data di consegna" formControlName="dataConsegna">
+        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+        <mat-datepicker #picker3></mat-datepicker>
+      </mat-form-field>
+      <div style="display: flex; flex-direction: row;">
+        <mat-form-field appearance="outline" style="width: 400px;">
+          <mat-label>{{'ARTICOLO' | translate}}</mat-label>
+          <input type="text"
+                placeholder="Seleziona articolo...."
+                aria-label="Articolo"
+                matInput
+                formControlName="articolo"
+                [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayArticolo">
+            <mat-option *ngFor="let articolo of articoli$ | async" [value]="articolo" >
+              {{articolo.descrizione}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 110px;">
+          <mat-label>{{'QUANTITA' | translate}}</mat-label>
+          <input matInput placeholder="Quantita" formControlName="quantita">
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 110px;">
+          <mat-label>{{'TAGLIA' | translate}}</mat-label>
+          <input matInput placeholder="Taglia" formControlName="taglia">
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <textarea matInput placeholder="Note" formControlName="note"></textarea>
+      </mat-form-field>
+
+    </div>
+  </form>
+</div>
