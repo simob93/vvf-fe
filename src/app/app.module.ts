@@ -111,6 +111,7 @@ import { ArticoliDepositiComponent } from './magazzino/articoli/catalogo/articol
 import { DotazionePageComponent } from './dotazione/dotazione-page/dotazione-page.component';
 import { DotazioneListComponent } from './dotazione/dotazione-list/dotazione-list.component';
 import { DotazioneFormComponent } from './dotazione/dotazione-form/dotazione-form.component';
+import { PortletDotazioneComponent } from './portlet/portlet-dotazione/portlet-dotazione.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/language/', '.json');
@@ -196,7 +197,8 @@ export function createTranslateLoader(http: HttpClient) {
         ArticoliDepositiComponent,
         DotazionePageComponent,
         DotazioneListComponent,
-        DotazioneFormComponent
+        DotazioneFormComponent,
+        PortletDotazioneComponent
     ],
     imports: [
         FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),

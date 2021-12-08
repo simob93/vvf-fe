@@ -90,6 +90,8 @@
     "QUANTITA":"Quantita",
     "ARTICOLO":"Articolo",
     "AGGIUNGI_ARTICOLO": "Aggiungi articolo",
-    "TAGLIA": "Taglia"
+    "TAGLIA": "Taglia",
+    "STAMPA": "Stampa",
+    "CATEGORIA_RICERCA": "Categoria articoli.."
 
 }

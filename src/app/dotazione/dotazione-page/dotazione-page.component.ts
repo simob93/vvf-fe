@@ -35,6 +35,10 @@ export class DotazionePageComponent implements OnInit, OnDestroy, AfterViewInit 
       this.formDotazioni.caricaDati(record['codice']);
     }
   }
+
+  onAfterDelete() {
+    this.listDotazioni.loadGridData();
+  }
   /**
   * 
   * @param id 

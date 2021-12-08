@@ -4,15 +4,6 @@
 export type BtnMessageType = "YES" | "NO" | "CANCEL" | "OK";
 export type TrueFalseType = "T"|"F";
 
-class VideateProgramma {
-    id: number;
-    descr: string; 
-    constructor(id: number, descr: string) {
-        this.id = id;
-        this.descr = descr;
-    }
-}
-
 export const DATE_FORMAT_STANDARD = "YYYY-MM-DD";
 export const DATE_TIME_FORMAT_STANDARD = "YYYY-MM-DD HH:mm:ss";
 
@@ -29,6 +20,7 @@ export const COD_VIDEATA_ANAGRAFICA : number = 12;
 export const COD_VIDEATA_GEST_VIGILI : number = 1;
 export const COD_VIDEATA_ASSENZE : number = 13;
 export const COD_VIDEATA_ACCOUNT : number = 14;
+
 
 
 

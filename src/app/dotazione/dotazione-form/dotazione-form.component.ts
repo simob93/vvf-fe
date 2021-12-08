@@ -1,15 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { Articolo, Dotazione } from 'src/app/model';
+import { forkJoin, Observable } from 'rxjs';
+import { Articolo, Categoria, Dotazione } from 'src/app/model';
 import { MagazzinoService } from 'src/app/service/magazzino.service';
-import { mergeMap, map, distinctUntilChanged, filter, debounceTime, switchMap, reduce } from 'rxjs/operators';
-import { VigileService } from 'src/app/service';
+import { mergeMap, map, distinctUntilChanged, filter, debounceTime, switchMap, reduce, takeUntil } from 'rxjs/operators';
+import { GeneralService, VigileService } from 'src/app/service';
 import { formattaData, isValidID } from 'src/app/utils/functions';
 import { MessageService } from 'src/app/service/message.service';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
-import { DATE_FORMAT_STANDARD, DATE_TIME_FORMAT_STANDARD } from 'src/app/utils/constant';
+
+import { DATE_TIME_FORMAT_STANDARD } from 'src/app/utils/constant';
+import { KeyValue } from 'src/app/model/keyValue';
+import { ReportService } from 'src/app/service/report.service';
+import { StandardMessageComponent } from 'src/app/common/standard-message/standard-message.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'dotazione-form',
@@ -18,14 +21,21 @@ import { DATE_FORMAT_STANDARD, DATE_TIME_FORMAT_STANDARD } from 'src/app/utils/c
 })
 export class DotazioneFormComponent implements OnInit {
     myForm: FormGroup;
-    articoli$: Observable<Articolo[]> = null
+    articoli$: Observable<Articolo[]> = null;
+    elencoTaglie$: Observable<KeyValue[]> = null;
+    elencoCategorie$: Observable<Categoria[]> = null;
     @Input() idVigile: number;
+
     @Output('afterSave') afterSave: EventEmitter<any> = new EventEmitter<any>()
+    @Output('afterDelete') afterDelete: EventEmitter<any> = new EventEmitter<any>()
+
     constructor(
         private fb: FormBuilder,
+        private dialog: MatDialog,
+        private reportService: ReportService,
         private messageService: MessageService,
         private magazzinoService: MagazzinoService,
-        private store: Store<AppState>,
+        private generalService: GeneralService,
         private vigileService: VigileService
     ) { }
 
@@ -36,18 +46,37 @@ export class DotazioneFormComponent implements OnInit {
 
     onClickBtnElimina() {
 
+        const {
+            id
+        } = this.myForm.value;
 
+        if (isValidID(id)) {
+            this.dialog.open(StandardMessageComponent, {
+                data: {
+                    type: 'DEL',
+                    callbackOnOk: () => {
+                        this.vigileService.deleteDotazione(id)
+                            .pipe(
+                                filter(resp => resp.success)
+                            ).subscribe(data => {
+                                this.myForm.reset();
+                                this.afterDelete.emit();
+                            })
+                    }
+                }
+            })
+        }
     }
 
     onClickBtnRipristina() {
-        if(this.myForm.value.id) {
+        if (this.myForm.value.id) {
             this.caricaDati(this.myForm.value.id)
         } else {
             this.myForm.reset();
         }
     }
 
-    varificaCampi() : boolean {
+    varificaCampi(): boolean {
         const record = this.myForm.value;
         const {
             articolo,
@@ -56,15 +85,15 @@ export class DotazioneFormComponent implements OnInit {
         } = record;
 
         if (!articolo) {
-            this.messageService.show({success: false, message: 'Campo articolo obbligatorio', showDialog: true})
+            this.messageService.show({ success: false, message: 'Campo articolo obbligatorio', showDialog: true })
             return false;
         }
         if (!quantita) {
-            this.messageService.show({success: false, message: 'Campo quantità obbligatorio', showDialog: true})
+            this.messageService.show({ success: false, message: 'Campo quantità obbligatorio', showDialog: true })
             return false;
         }
         if (!dataConsegna) {
-            this.messageService.show({success: false, message: 'Campo data di consegna obbligatorio', showDialog: true})
+            this.messageService.show({ success: false, message: 'Campo data di consegna obbligatorio', showDialog: true })
             return false;
         }
         return true;
@@ -80,7 +109,7 @@ export class DotazioneFormComponent implements OnInit {
 
         let newRecord = Object.assign({}, record);
 
-        if (!this.varificaCampi()) 
+        if (!this.varificaCampi())
             return;
 
         newRecord.idArticolo = articolo['id'];
@@ -146,7 +175,6 @@ export class DotazioneFormComponent implements OnInit {
                         emitEvent: false
                     });
                 }
-                
             })
     }
 
@@ -158,19 +186,35 @@ export class DotazioneFormComponent implements OnInit {
         return object ? object['descrizione'] : null
     }
 
+    onClickBtnStampa() {
+        this.reportService.stampaDotazioniVigile(this.idVigile);
+    }
+
     ngOnInit() {
         this.myForm = this.fb.group({
             id: [''],
             idVigile: [''],
             dataConsegna: [''],
+            _categoria: ['', Validators.nullValidator],
             idArticolo: [null],
-            articolo: [null,  Validators.required],
+            articolo: [null, Validators.required],
             quantita: [null, Validators.required],
             taglia: [null],
             note: [null]
         })
+        this.elencoTaglie$ = this.generalService.listTaglieAbbigliamento().pipe(map(resp => resp.data));
 
-        this.articoli$ = this.myForm.get('articolo')
+        this.elencoCategorie$ = this.magazzinoService.listCategorie().pipe(map(resp => resp.data));
+
+        this.articoli$ = this.myForm.get('_categoria')
+            .valueChanges
+            .pipe(
+                mergeMap(value => this.magazzinoService.listArticoli(null, null, null, value).pipe(
+                    map(resp => resp.data)
+                ))
+            )
+
+        /*this.articoli$ = this.myForm.get('articolo')
             .valueChanges
             .pipe(
                 filter((value) => value != null),
@@ -180,7 +224,7 @@ export class DotazioneFormComponent implements OnInit {
                     .pipe(
                         map(resp => resp.data)
                     ))
-            )
+            )*/
 
     }
 

@@ -23,7 +23,7 @@ export class DotazioneListComponent implements OnInit, OnChanges  {
 			headerName: 'Data consegna',
 			width: 140,
 			field: 'data',
-			cellRenderer: params => formattaData(params.data, "DD/MM/YYYY")
+			cellRenderer: params => formattaData(params.data.data, "DD/MM/YYYY")
 
 		},
 		{
