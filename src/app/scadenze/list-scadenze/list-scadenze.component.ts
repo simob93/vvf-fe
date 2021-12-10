@@ -11,7 +11,7 @@ import { StandardMessageComponent } from '../../common/standard-message/standard
 import { Subject } from 'rxjs';
 import { AppState, reducers } from 'src/app/reducers';
 import { Store } from '@ngrx/store';
-import { takeUntil, filter } from 'rxjs/operators';
+import { takeUntil, filter, withLatestFrom } from 'rxjs/operators';
 
 @Component({
     selector: 'app-list-scadenze',

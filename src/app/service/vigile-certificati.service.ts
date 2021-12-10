@@ -29,7 +29,7 @@ export class VigileCertificatiService {
         .pipe(
             tap(rec => {
                 if (rec['success']) {
-                    this.generalService.listNotification().subscribe(data => {});
+                    //this.generalService.listNotification().subscribe(data => {});
                 }
             })
         )

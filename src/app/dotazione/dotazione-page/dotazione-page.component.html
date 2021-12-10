@@ -1,4 +1,4 @@
 <div style="height: 100%; display: flex; flex-direction: row;">
-    <dotazione-list #listDotazioni [idVigile]="idVigile" (selectionChange)="onSelectionChange($event)"></dotazione-list>
+    <dotazione-list #listDotazioni (selectionChange)="onSelectionChange($event)" (onAfterRender)="afterRenderGrid()"></dotazione-list>
     <dotazione-form #formDotazioni (afterDelete)="onAfterDelete()" (afterSave)="onAfterSave($event)" [idVigile]="idVigile" style="margin-left: 25px;"></dotazione-form>
 </div>

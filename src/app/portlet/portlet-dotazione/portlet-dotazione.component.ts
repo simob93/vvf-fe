@@ -22,7 +22,7 @@ export class PortletDotazioneComponent implements OnInit {
       field: 'descrArticolo',
     },
     {
-      headerName: 'Data di consegna',
+      headerName: 'Ultima data di consegna',
       flex: 1,
       field: 'dataUltimaConsegna',
       valueFormatter: (params) => params['value'] && moment(params['value']).format('DD/MM/YYYY')

@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../reducers';
 import * as VigiliDetailAction from '../actions/vigiliDetailAction'
-import * as PortletVigilePatentiAction from '../actions/portletVigilePatentiAction'
-import * as VigileSelAction from '../actions/vigileSelAction'
 
 import { Vigile } from '../model';
 import { Subject } from 'rxjs';
@@ -32,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             rec => rec.detailVigiliReducer)
             .pipe(takeUntil(this._onDestroy))
             .subscribe(detail => {
-                this.noVigileSel = (detail['data'] == null);
+                this.noVigileSel = (detail['data'] == null) && !detail.isFetching;
                 if (detail['data']) {
                     this.vigile = Object.assign({}, detail['data']);
                     
@@ -50,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     refreshDasboard(vigile) {
-        this.store.dispatch(new VigileSelAction.Selection(vigile));
+        //this.store.dispatch(new VigileSelAction.Selection(vigile));
         this.store.dispatch(new VigiliDetailAction.FetchingAction(vigile['id']));
         //this.store.dispatch(new PortletVigilePatentiAction.FetchingAction(vigile['id']));
         //this.route.navigate(['vigile', vigile['id']], {relativeTo: this.activatedRoute})

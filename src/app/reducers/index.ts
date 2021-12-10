@@ -30,7 +30,6 @@ export interface AppState {
     portletVigileScadenzeReducer: AppFetchState,
     loginReducer: AppFetchState,
     changePasswordReducer: AppFetchState,
-    vigileSelReducer,
     permissionReducer,
     listGradiReducer,
 
@@ -74,7 +73,6 @@ export const reducers: ActionReducerMap<AppState> = {
     listVigiliReducer,
     detailVigiliReducer,
     listServiziReducer,
-    vigileSelReducer,
     listVgilePatentiReducer,
     portletVigilePatentiReducer,
     listVgileCertificazioniReducer,

@@ -37,35 +37,39 @@ export class DotazionePageComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onAfterDelete() {
-    this.listDotazioni.loadGridData();
+    this.listDotazioni.loadGridData(this.idVigile);
   }
   /**
   * 
   * @param id 
   */
   onAfterSave(data) {
-    this.listDotazioni.loadGridData(data['id']);
+    this.listDotazioni.loadGridData(this.idVigile, data['id']);
+  }
+
+  afterRenderGrid() {
+    this.store.select(reducers => reducers.detailVigiliReducer)
+      .pipe(
+        takeUntil(this._onDestroy),
+        filter(data => data.data != null),
+        map(data => data.data['id'])
+      ).subscribe(idVigile => {
+        if (this.formDotazioni &&
+          this.formDotazioni.myForm) {
+          this.formDotazioni.myForm.reset();
+        }
+        this.idVigile = idVigile;
+        this.listDotazioni.loadGridData(this.idVigile);
+      })
   }
 
   ngOnInit() {
 
-    this.store.select(reducers => reducers.detailVigiliReducer)
-    .pipe(
-      takeUntil(this._onDestroy),
-      filter(data => data.data != null),
-      map(data => data.data['id'])
-    ).subscribe(idVigile => {
-      if (this.formDotazioni && 
-          this.formDotazioni.myForm) {
-          this.formDotazioni.myForm.reset();
-      }
-      this.idVigile = idVigile;
-    })
 
   }
 
   ngAfterViewInit(): void {
-    
+
   }
 
 }

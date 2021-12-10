@@ -11,13 +11,13 @@ import { formattaData, isValidID } from 'src/app/utils/functions';
 	templateUrl: './dotazione-list.component.html',
 	styleUrls: ['./dotazione-list.component.scss']
 })
-export class DotazioneListComponent implements OnInit, OnChanges  {
+export class DotazioneListComponent implements OnInit  {
 
 	gridApi: any;
 	private _onDestroy: Subject<any> = new Subject<any>();
 	
-	@Input() idVigile: number;
 	@Output() selectionChange: EventEmitter<Dotazione> = new EventEmitter<Dotazione>();
+	@Output() onAfterRender: EventEmitter<any> = new EventEmitter<any>();
 	displayedColumns: any = [
 		{
 			headerName: 'Data consegna',
@@ -30,17 +30,13 @@ export class DotazioneListComponent implements OnInit, OnChanges  {
 			headerName: 'Articolo',
 			flex: 1,
 			field: 'valore',
+			filter: 'agTextColumnFilter',
 			ellStyle: {'white-space': 'normal'}
 		}
 	]
 
 	constructor(private vigileService: VigileService) { }
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.idVigile && (this.gridApi != null)) {
-			this.loadGridData();
-		}
-	}
 	ngOnDestroy(): void {
 
 		this._onDestroy.next();
@@ -56,9 +52,9 @@ export class DotazioneListComponent implements OnInit, OnChanges  {
 	 * 
 	 * @param idSel 
 	 */
-	loadGridData(idSel?) {
+	loadGridData(idVigile, idSel?) {
 		this.gridApi.deselectAll();
-		this.vigileService.listDotazioniCbox(this.idVigile)
+		this.vigileService.listDotazioniCbox(idVigile)
 			.pipe(
 				takeUntil(this._onDestroy),
 				map(response => response.data)
@@ -87,7 +83,7 @@ export class DotazioneListComponent implements OnInit, OnChanges  {
 	onGridReady(params) {
 		this.gridApi = params.api;
 		this.gridApi.hideOverlay();
-		this.loadGridData();
+		this.onAfterRender.emit();
 	}
 
 	ngOnInit() {

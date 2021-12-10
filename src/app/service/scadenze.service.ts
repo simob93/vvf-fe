@@ -21,7 +21,7 @@ export class ScadenzeService {
         return this.http.post<Scadenze>('/vvf/expiry/new', scadenza).pipe(
             tap(rec => {
                 if (rec['success']) {
-                    this.generalService.listNotification().subscribe(data => {})
+                    //this.generalService.listNotification().subscribe(data => {})
                 }
             })
         )
@@ -35,7 +35,7 @@ export class ScadenzeService {
         .pipe(
             tap(rec => {
                 if (rec['success']) {
-                    this.generalService.listNotification().subscribe(data => {});
+                    //this.generalService.listNotification().subscribe(data => {});
                 }
             })
         )
@@ -49,7 +49,7 @@ export class ScadenzeService {
         .pipe(
             tap(rec => {
                 if (rec['success']) {
-                    this.generalService.listNotification().subscribe(data => {});
+                    //this.generalService.listNotification().subscribe(data => {});
                 }
             })
         )

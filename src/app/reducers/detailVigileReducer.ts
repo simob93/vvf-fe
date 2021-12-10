@@ -27,6 +27,7 @@ export function detailVigiliReducer(state = initialState, action: VVFAction): Ap
         case VigiliDetailAction.FETCHING:
             return {
                 ...state,
+                data: null,
                 isFetching: true,
                 message: action.message,
             }
