@@ -5,7 +5,6 @@ import { listServiziReducer } from './listServiziReducers';
 
 import { AppFetchState } from '../state';
 import { ActionReducerMap, createSelector } from '@ngrx/store'
-import { vigileSelReducer } from './vigileSelReducer';
 import { listVgilePatentiReducer } from './listVgilePatentiReducer';
 import { portletVigilePatentiReducer } from './portletVigilePatentiReducer';
 import { listVgileCertificazioniReducer } from './listVigileCertificazioniReducer';
