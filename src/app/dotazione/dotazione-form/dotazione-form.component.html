@@ -42,7 +42,7 @@
                 formControlName="articolo"
                 [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayArticolo">
-            <mat-option *ngFor="let articolo of articoli$ | async" [value]="articolo" >
+            <mat-option *ngFor="let articolo of (articoli$ | async) | filterOn: 'descrizione' : myForm.get('articolo').value" [value]="articolo" >
               {{articolo.descrizione}}
             </mat-option>
           </mat-autocomplete>
