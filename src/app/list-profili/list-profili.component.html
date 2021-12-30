@@ -4,6 +4,7 @@
       [rowHeight]="35"
       [getRowNodeId]="getRowNodeId"
       [rowSelection]="'single'"
+      overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
       (selectionChanged)="onSelectionChanged($event)"
       (gridReady)="onGridReady($event)"
       [columnDefs]="displayedColumns">

@@ -1,6 +1,7 @@
 <div style="height: 280px; width: 100%; overflow: auto;">
   <ag-grid-angular style="width: 100%; height: 100%;" 
       class="ag-theme-material"
+      overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
       [rowData]="(listDotazioni$ | async)" 
       [columnDefs]="displayedColumns">
   </ag-grid-angular>

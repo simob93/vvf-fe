@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-    HttpClient
+    HttpClient, HttpHeaders, HttpParams
 } from '@angular/common/http';
 import {
     Vigile
@@ -17,6 +17,7 @@ import 'moment/locale/it';
     providedIn: 'root'
 })
 export class VigileService {
+    
 
     constructor(
         private http: HttpClient, ) { }
@@ -186,5 +187,31 @@ export class VigileService {
             let fileURL = URL.createObjectURL(blob);
             window.open(fileURL);
         });
+    }
+    /**
+     * 
+     * @param id 
+     * @param base64 
+     * @returns 
+     */
+    uploadFoto(idVigile, base64) {
+        let httpParams = new HttpParams()
+            .set("idVigile", idVigile)
+            .set("base64", encodeURIComponent(base64)
+            .replace(/%40/gi, '@')
+            .replace(/%3A/gi, ':')
+            .replace(/%24/gi, '$')
+            .replace(/%2C/gi, ',')
+            .replace(/%3B/gi, ';')
+            //.replace(/%2B/gi, '+')
+            .replace(/%3D/gi, ';')
+            .replace(/%3F/gi, '?')
+            .replace(/%2F/gi, '/'));
+
+        let headers = new HttpHeaders();
+            headers = headers.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        return this.http.post<JsonResponse<Vigile>>(`/vvf/vigili/uploadFoto`, httpParams, {
+            headers
+        })
     }
 }

@@ -22,6 +22,7 @@
 	<mat-list-item
 		*ngFor="let vigile of filteredList"
 		(click) ="onItemClick(vigile)"
+		style="cursor: pointer;"
 		[class.list-item-active]="vigile.id == (vigileSel && vigileSel.id)">
 		<h4 mat-list-icon>
 			<ngx-avatar

@@ -54,7 +54,7 @@ export class VigiliEffect {
 
                 ).pipe(
                     map(([respVigile, respServizio, respMansione, respAssenza]) => {
-                       return {...respVigile['data'], servizio: respServizio['data'], mansione: respMansione, assente: !!respAssenza['data']}
+                       return {...respVigile['data'], servizio: respServizio['data'], mansione: respMansione, assente: respAssenza['data'] != null}
                     }),
                     map(resp => ({ type: VigiliDetailAction.SUCCESS, payload: resp })),
                     catchError(() => EMPTY)

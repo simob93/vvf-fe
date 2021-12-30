@@ -25,7 +25,7 @@
       <h2 class="mat-card-title">{{'VOCI_DI_MENU' | translate}}</h2>
       <!--Grid voci menu   -->
       <ag-grid-angular style="height: 300px;" *ngIf="(listPermessi$ | async).length > 0" class="ag-theme-material" 
-        
+        overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
         [rowData]="(listPermessi$ | async)" 
         [getRowNodeId]="getRowNodeId"
         [rowSelection]="'single'" 

@@ -23,6 +23,7 @@ export class Vigile {
     mansione?: Carriera;
     assente: boolean;
     noSaltoTurno?: number;
+    foto?: string;
 
     constructor(
         
