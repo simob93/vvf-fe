@@ -28,21 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         translate.setDefaultLang('it');
         translate.use('it');
 
-        this.store.select(
-            rec => rec.detailVigiliReducer)
-            .pipe(takeUntil(this._onDestroy))
-            .subscribe(detail => {
-                this.noVigileSel = (detail['data'] == null) && !detail.isFetching;
-                if (detail['data']) {
-                    this.vigile = Object.assign({}, detail['data']);
-                    this.setFoto(detail['data']['foto']);
-                    if (detail['data']['servizio'])
-                        this.vigile['servizio'] = detail['data']['servizio'].reverse()[0]; 
-                    if ( detail['data']['mansione'] ){
-                        this.vigile['mansione'] = detail['data']['mansione'] && detail['data']['mansione'].reverse()[0]; 
-                    }
-                } 
-            })
+        
     }
     /**
      * 
@@ -100,7 +86,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log('entrato')
+        this.store.select(
+            rec => rec.detailVigiliReducer)
+            .pipe(takeUntil(this._onDestroy))
+            .subscribe(detail => {
+                this.noVigileSel = (detail['data'] == null) && !detail.isFetching;
+                if (detail['data']) {
+                    this.vigile = Object.assign({}, detail['data']);
+                    this.setFoto(detail['data']['foto']);
+                    if (detail['data']['servizio'])
+                        this.vigile['servizio'] = detail['data']['servizio'].reverse()[0]; 
+                    if ( detail['data']['mansione'] ){
+                        this.vigile['mansione'] = detail['data']['mansione'] && detail['data']['mansione'].reverse()[0]; 
+                    }
+                } 
+            })
     }
 
 }

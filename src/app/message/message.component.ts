@@ -24,7 +24,7 @@ export class MessageComponent implements OnInit {
         this.messageService.messageState.subscribe((msgState: MessageState) => { 
             if (msgState.success) {
                 //tutte le chiamate di salvataggio record quelle di ricerca non devono mostrare il dialog
-                this.snackBar.open(msgState.message, null, {
+                this.snackBar.open( <string> msgState.message, null, {
                     duration: 1500
                 });
             } else if (msgState.showDialog) {
@@ -42,7 +42,11 @@ export class MessageComponent implements OnInit {
     template: `
         <h1 mat-dialog-title>Attenzione</h1>
         <div mat-dialog-content>
-          <p>{{this.data}}</p>
+          <ul style="list-style: none;">
+            <li *ngFor="let stringa of this.data" style="background-image: url(assets/images/general/close.png); background-repeat: no-repeat; padding-left: 40px; line-height: 35px;" >
+              {{stringa}}
+            </li>
+          </ul>
         </div>
         <div mat-dialog-actions>
           <button mat-button [mat-dialog-close]="true">Ok</button>

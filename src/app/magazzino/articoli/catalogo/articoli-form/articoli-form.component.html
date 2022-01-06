@@ -18,22 +18,22 @@
         <input matInput placeholder="Descrizione articolo" formControlName="descrizione">
       </mat-form-field>
       <mat-form-field appearance="outline" style="width: 150px;">
-        <mat-label>{{'CODICE' | translate}}</mat-label>
+        <mat-label>{{'BARCODE' | translate}}</mat-label>
         <input matInput placeholder="Codice" formControlName="codice">
       </mat-form-field>
-      <mat-checkbox formControlName="abilitaTaglia">{{'ABILITA_SCADENZA' | translate}}</mat-checkbox>
-      <mat-checkbox formControlName="abilitaScadenza">{{'ABILITA_GESTIONE_TAGLIE' | translate}}</mat-checkbox>
+      <mat-checkbox hidden formControlName="abilitaTaglia">{{'ABILITA_SCADENZA' | translate}}</mat-checkbox>
+      <mat-checkbox hidden formControlName="abilitaScadenza">{{'ABILITA_GESTIONE_TAGLIE' | translate}}</mat-checkbox>
     </div>
   </form>
   <mat-divider></mat-divider>
   <div style="width: 100%; margin-top: 25px;">
     <mat-tab-group  *ngIf="isValidID(this.myForm.get('id').value)" style="width: 100%;" >
-      <mat-tab label="Depositi">
+      <!--<mat-tab label="Depositi">
         <ng-template mat-tab-label>
           <span [matBadge]="(dep.count || null)" matBadgeOverlap="false">{{'DEPOSITI' | translate}}</span>
         </ng-template>  
         <mag-articoli-depositi #dep></mag-articoli-depositi>
-      </mat-tab>
+      </mat-tab> -->
       <mat-tab>
         <ng-template mat-tab-label>
           <span [matBadge]="(cat.count || null)" matBadgeOverlap="false">{{'CATEGORIE' | translate}}</span>

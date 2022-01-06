@@ -26,6 +26,6 @@ export interface LoaderState {
 
 export interface MessageState {
     success: boolean;
-    message: string;
+    message: string[] | string;
     showDialog: boolean;   
 }

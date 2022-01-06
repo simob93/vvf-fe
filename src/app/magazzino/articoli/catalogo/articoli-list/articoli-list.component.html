@@ -1,6 +1,7 @@
 <div style="height: 100%;">
   <ag-grid-angular style="width: 260px; height: 100%;" class="ag-theme-material"
   [getRowNodeId]="getRowNodeId"
+  suppressLoadingOverlay
   [rowSelection]="'single'"
   overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
   (selectionChanged)="onSelectionChanged()"

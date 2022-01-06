@@ -2,7 +2,7 @@
 <mat-sidenav-container style="height: 100%; width: 100%;">
   <mat-sidenav mode="side" opened style="width: 200px;">
     <mat-list dense> 
-      <div mat-subheader class="list-header-style">{{'DEPOSITI' | translate}}</div>
+      <!--<div mat-subheader class="list-header-style">{{'DEPOSITI' | translate}}</div>
       <mat-list-item 
         *ngFor="let deposito of DEPOSITO" 
         routerLinkActive
@@ -12,7 +12,7 @@
         <mat-icon mat-list-icon>{{deposito.icon}}</mat-icon>
         <div mat-line>{{deposito.name | translate}}</div>
       </mat-list-item>
-      <mat-divider></mat-divider>
+      <mat-divider></mat-divider> -->
       <div mat-subheader class="list-header-style">{{'CATALOGO_ARTICOLI' | translate}}</div>
       <mat-list-item 
         *ngFor="let catalogoArt of CATALOGO" 
@@ -20,8 +20,11 @@
         routerLinkActive
 		    #routerLinkActiveInstance="routerLinkActive"
 		    [class.list-item-mag-active]="routerLinkActiveInstance.isActive">
-        <mat-icon mat-list-icon>{{catalogoArt.icon}}</mat-icon>
-        <div mat-line>{{catalogoArt.name | translate}}</div>
+        <div style="display: flex; flex-direction: row; align-items: center;">
+          <img  width="24" src="assets/images/general/{{catalogoArt.icon}}"/>
+          <!--<mat-icon >{{catalogoArt.icon}}</mat-icon>-->
+          <div style="margin-left: 5px;">{{catalogoArt.name | translate}}</div>
+        </div>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>

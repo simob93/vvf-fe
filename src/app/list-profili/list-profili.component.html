@@ -3,6 +3,7 @@
   <ag-grid-angular style="width: 250px; height: 100%;" class="ag-theme-material"
       [rowHeight]="35"
       [getRowNodeId]="getRowNodeId"
+      suppressLoadingOverlay
       [rowSelection]="'single'"
       overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
       (selectionChanged)="onSelectionChanged($event)"

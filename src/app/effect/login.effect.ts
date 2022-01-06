@@ -36,19 +36,15 @@ export class LoginEffect {
                                     })
                                 );
                             } else {
-                                return throwError(data.message.toString());
+                                return of({ type: LoginAction.FAILED, payload: null });
                             }      
                         } else {
-                            return  throwError(data.message.toString());
+                            return  of({ type: LoginAction.FAILED, payload: null });
                         }
                     }),
                     map(resp =>  {
                         return { type: LoginAction.SUCCESS, payload: resp }
-                    }),
-                    catchError(() => {
-                        return of({ type: LoginAction.FAILED, payload: null });
-                    }),
-
+                    })
                 ),
             )
         )

@@ -13,24 +13,24 @@ export interface Section {
 })
 export class MagazzinoPageComponent implements OnInit {
   
-DEPOSITO: Section[] = [
+/*DEPOSITO: Section[] = [
   {
     name: 'DEPOSITI',
     link: 'depositi',
     icon: 'maps_home_work',
   },
-];
+];*/
 
 CATALOGO: Section[] = [
   {
     name: 'CATEGORIE',
     link: 'categorie',
-    icon: 'maps_home_work'
+    icon: 'tag.png'
   },
   {
     name: 'ARTICOLI',
     link: 'articoli',
-    icon: 'maps_home_work'
+    icon: 'warehouse.png'
   }
 ]
   constructor() {

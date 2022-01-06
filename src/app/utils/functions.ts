@@ -75,7 +75,7 @@ export function resetStateForm(form : FormGroup) {
 }
 
 export function sporcaForm(form : FormGroup) {
-    form.get('id').setValue(-9999);
+    form.get('id').setValue(null);
     form.markAsDirty();
 }
 

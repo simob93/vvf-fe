@@ -13,7 +13,7 @@ import * as LoginAction from '../actions/login.action';
     providedIn: 'root'
 })
 export class LoaderInterceptorService implements HttpInterceptor {
-
+    mostraMessaggio: boolean = false;
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -38,7 +38,6 @@ export class LoaderInterceptorService implements HttpInterceptor {
             if (event instanceof HttpResponse) {
                 this.onEnd();
                 let body = event.body;
-
                 if (event.status == 401) { //non sei autenticato
                     this.store.dispatch(new LoginAction.DoLogOutAction())
                     this.router.navigate(['login']);

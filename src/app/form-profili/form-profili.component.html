@@ -27,6 +27,7 @@
       <ag-grid-angular style="height: 300px;" *ngIf="(listPermessi$ | async).length > 0" class="ag-theme-material" 
         overlayNoRowsTemplate="<span>Nessun dato trovato</span>"
         [rowData]="(listPermessi$ | async)" 
+        suppressLoadingOverlay
         [getRowNodeId]="getRowNodeId"
         [rowSelection]="'single'" 
         (cellClicked)="onCellClicked($event)"

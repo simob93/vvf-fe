@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { Observable, BehaviorSubject, Subject, combineLatest, forkJoin } from 'rxjs';
 import { switchMap, filter, map, tap, switchMapTo, withLatestFrom } from 'rxjs/operators';
 import { GestProfiliService } from '../service/profili-shared.service';
-import { resetStateForm, sporcaForm } from '../utils/functions';
+import { isValidID, resetStateForm, sporcaForm } from '../utils/functions';
 import { MatDialog } from '@angular/material';
 import { EditPermessoComponent } from '../edit-permesso/edit-permesso.component';
 import { KeyValue } from '@angular/common';
@@ -104,7 +104,7 @@ export class FormProfiliComponent implements OnInit, OnDestroy {
       id
     } = record;
 
-    if (id) {
+    if (isValidID(id)) {
       this.ruoliService.update(record)
         .pipe(
           takeUntil(this._onDestroy),
