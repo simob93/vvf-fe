@@ -27,6 +27,11 @@ export class TurniService {
             params
         })
     }
+    getTurnario(params) {
+        return this.http.get<JsonResponse<Turno[]>>('/vvf/turni/getTurnario', {
+            params
+        })
+    }
     /**
      * 
      * @param params 
