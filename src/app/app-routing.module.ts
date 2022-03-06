@@ -30,6 +30,7 @@ import { CategoriePageComponent } from './magazzino/articoli/categorie/categorie
 import { DepositiPageComponent } from './magazzino/depositi/depositi-page/depositi-page.component';
 import { ArticoliPageComponent } from './magazzino/articoli/catalogo/articoli-page/articoli-page.component';
 import { DotazionePageComponent } from './dotazione/dotazione-page/dotazione-page.component';
+import { ScadenzaArticoliPageComponent } from './magazzino/scadenza-articoli/scadenza-articoli-page/scadenza-articoli-page.component';
 
 
 const navigationVigile: Routes = [
@@ -143,6 +144,10 @@ const routes: Routes = [
 			{
 				path: 'categorie',
 				component: CategoriePageComponent
+			},
+			{
+				path: 'scadenza',
+				component: ScadenzaArticoliPageComponent
 			}
 		]
 	},

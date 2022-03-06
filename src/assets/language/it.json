@@ -94,6 +94,15 @@
     "STAMPA": "Stampa",
     "CATEGORIA_RICERCA": "Categoria articoli..",
     "VAI_A_DOTAZIONE": "Vai a dotazione",
-    "BARCODE": "Barcode"
+    "BARCODE": "Barcode",
+    "SCADENZA_ARTICOLI": "Scadeze articoli",
+    "AGGIUNGI_SCADENZA": "Aggiungi scadenza",
+    "DATA_SCADENZA": "Data scadenza",
+    "NOTE": "Note",
+    "TIPO_SCADENZA": "Tipo scadenza",
+    "TIPO_SCADENZA_ARTICOLO_CONTROLLO": "Controllo",
+    "TIPO_SCADENZA_ARTICOLO_FINE_VITA": "Fine vita",
+    "INSERIMENTO_SCADENZA": "Inserimento scadenza"
+    
 
 }

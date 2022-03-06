@@ -31,6 +31,11 @@ CATALOGO: Section[] = [
     name: 'ARTICOLI',
     link: 'articoli',
     icon: 'warehouse.png'
+  },
+  {
+    name: 'SCADENZA_ARTICOLI',
+    link: 'scadenza',
+    icon: 'chronometer.png'
   }
 ]
   constructor() {

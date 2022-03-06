@@ -21,7 +21,7 @@ export class MessageService {
                 mostraPopUp = true;
             }
 
-            let strMessage = response.body.message
+            let strMessage = response.body.message && response.body.message
             .map(rec => rec['testo'])
             
             const objResponse: MessageState = {

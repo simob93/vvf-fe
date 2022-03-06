@@ -112,6 +112,9 @@ import { DotazionePageComponent } from './dotazione/dotazione-page/dotazione-pag
 import { DotazioneListComponent } from './dotazione/dotazione-list/dotazione-list.component';
 import { DotazioneFormComponent } from './dotazione/dotazione-form/dotazione-form.component';
 import { PortletDotazioneComponent } from './portlet/portlet-dotazione/portlet-dotazione.component';
+import { ScadenzaArticoliPageComponent } from './magazzino/scadenza-articoli/scadenza-articoli-page/scadenza-articoli-page.component';
+import { ScadenzaArticoliFormComponent } from './magazzino/scadenza-articoli/scadenza-articoli-form/scadenza-articoli-form.component';
+import { ScadenzaArticoliListComponent } from './magazzino/scadenza-articoli/scadenza-articoli-list/scadenza-articoli-list.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/language/', '.json');
@@ -198,7 +201,10 @@ export function createTranslateLoader(http: HttpClient) {
         DotazionePageComponent,
         DotazioneListComponent,
         DotazioneFormComponent,
-        PortletDotazioneComponent
+        PortletDotazioneComponent,
+        ScadenzaArticoliPageComponent,
+        ScadenzaArticoliFormComponent,
+        ScadenzaArticoliListComponent
     ],
     imports: [
         FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
@@ -257,6 +263,7 @@ export function createTranslateLoader(http: HttpClient) {
         TurniOptStampaComponent,
         EditPermessoComponent,
         ProtocolloRicercaAvanzataComponent,
+        ScadenzaArticoliFormComponent,
         DialogMessage
     ],
     providers: [

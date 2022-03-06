@@ -99,13 +99,7 @@ export class TurniPageComponent implements OnInit, OnDestroy {
         dal = dal.format('YYYY-MM-DD');
         al = al.format('YYYY-MM-DD');
 
-        this.turniSrvice.getTurnario({dal, al}).pipe(
-            filter(resp => resp.success),
-            map(resp=> resp.data),
-        ).subscribe(data => {  
-            console.log(data.map(turno => turno.letteraVigile));
-        });
-
+    
         return this.turniSrvice.calc({dal, al}).pipe(
             tap(result => {
                 if (!result.success) { 

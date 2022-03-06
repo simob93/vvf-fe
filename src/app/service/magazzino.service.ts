@@ -4,6 +4,7 @@ import {
 } from '@angular/common/http';
 import { JsonResponse, Deposito, Articolo, Categoria, ArticoloCategoria, ArticoloDeposito } from '../model';
 import 'moment/locale/it';
+import { ArticoliScadenzaList } from '../model/articoliScadenzaList';
 
 @Injectable({
     providedIn: 'root'
@@ -34,18 +35,23 @@ export class MagazzinoService {
      * 
      * @param attivi 
      */
-    listArticoli(attivi, descr='', idDeposito = null, idCategoria=null) {
+    listArticoli(descrizione='', depositoId = null, categoriaId=null, conGestScadenza = false) {
 
         let params = {};
-        if (descr) {
-            Object.assign(params, {descr})
+        if (descrizione) {
+            Object.assign(params, {descrizione})
         }
-        if (idDeposito) {
-            Object.assign(params, {idDeposito})
+        if (depositoId) {
+            Object.assign(params, {depositoId})
         }
-        if (idCategoria) {
-            Object.assign(params, {idCategoria})
+        if (categoriaId) {
+            Object.assign(params, {
+                categoriaId
+            })
         }
+        Object.assign(params, {
+            conGestScadenza
+        })
 
         return this.http.get<JsonResponse<Articolo[]>>('/vvf/mag/articoli/list', {
             params
@@ -205,6 +211,10 @@ export class MagazzinoService {
      */
     saveArticoloDeposito(articoliDepositi: ArticoloDeposito[]) {
         return this.http.post<JsonResponse<ArticoloDeposito>>('/vvf/mag/articoli/depositi/new',  articoliDepositi);
+    }
+
+    listScadenzaArticoli() {
+        return this.http.get<JsonResponse<ArticoliScadenzaList>>('/vvf/mag/articoli/scadenza');
     }
     
 }

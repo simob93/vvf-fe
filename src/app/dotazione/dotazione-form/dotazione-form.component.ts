@@ -209,7 +209,7 @@ export class DotazioneFormComponent implements OnInit {
         this.articoli$ = this.myForm.get('_categoria')
             .valueChanges
             .pipe(
-                mergeMap(value => this.magazzinoService.listArticoli(null, null, null, value).pipe(
+                mergeMap(value => this.magazzinoService.listArticoli(null, null, value).pipe(
                     map(resp => resp.data)
                 ))
             )

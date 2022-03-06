@@ -40,7 +40,7 @@ export class ArticoliListComponent implements OnInit {
 	 */
 	loadGridData(idSel?) {
 		this.gridApi.deselectAll();
-		this.warehouseService.listArticoli(null)
+		this.warehouseService.listArticoli()
 			.pipe(
 				takeUntil(this._onDestroy),
 				map(response => response.data)

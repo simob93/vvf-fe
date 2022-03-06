@@ -1,0 +1,15 @@
+
+<div class="row_layout" style="padding: 4px;">
+  <span class="fill-remaining-space"></span>
+  <button mat-flat-button color="primary" (click)="clickBtnNuovo()">
+      <mat-icon aria-label="Nuova scadenza">add</mat-icon>
+      {{'AGGIUNGI_SCADENZA' | translate}}
+  </button>
+</div>
+<ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-material"
+  suppressLoadingOverlay
+  [getRowNodeId]="getRowNodeId"
+  [rowSelection]="'single'"
+  (gridReady)="onGridReady($event)"
+  [columnDefs]="displayedColumns">
+</ag-grid-angular>

@@ -117,7 +117,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 title: 'MAGAZZINO',
                 link: 'warehouse',
                 idMenu: 15,
-                image: "warehouse.svg",
+                image: "_warehouse.svg",
                 subMenu: []
             },
             

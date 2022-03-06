@@ -21,8 +21,8 @@
         <mat-label>{{'BARCODE' | translate}}</mat-label>
         <input matInput placeholder="Codice" formControlName="codice">
       </mat-form-field>
-      <mat-checkbox hidden formControlName="abilitaTaglia">{{'ABILITA_SCADENZA' | translate}}</mat-checkbox>
-      <mat-checkbox hidden formControlName="abilitaScadenza">{{'ABILITA_GESTIONE_TAGLIE' | translate}}</mat-checkbox>
+      <mat-checkbox formControlName="abilitaScadenza">{{'ABILITA_SCADENZA' | translate}}</mat-checkbox>
+      <mat-checkbox hidden formControlName="abilitaTaglia">{{'ABILITA_GESTIONE_TAGLIE' | translate}}</mat-checkbox>
     </div>
   </form>
   <mat-divider></mat-divider>

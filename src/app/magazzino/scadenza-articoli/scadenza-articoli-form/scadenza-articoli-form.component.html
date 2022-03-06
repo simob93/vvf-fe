@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{titolo | translate }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="myForm" class="column_layout" style="width: 600px; margin-top: 0px;">
+    <input matInput [hidden]="true" formControlName="id">
+    <div class="column_layout" style="margin-top: 15px;">
+      <input hidden formControlName="articoloId">
+      <mat-form-field appearance="outline" style="width: 400px;">
+        <mat-label>{{'ARTICOLO' | translate}}</mat-label>
+        <input type="text"
+              placeholder="Seleziona articolo...."
+              aria-label="Articolo"
+              matInput
+              formControlName="articolo"
+              [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete"  [displayWith]="displayArticolo">
+          <mat-option *ngFor="let articolo of (articoli$ | async) | filterOn: 'descrizione' : myForm.get('articolo').value" [value]="articolo" >
+            {{articolo.descrizione}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{'DATA_SCADENZA' | translate}}</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="{{'DATA_SCADENZA' | translate}}" formControlName="dataScadenza">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="margin-right" style="width: 220px;">
+        <mat-label>{{'TIPO_SCADENZA' | translate}}</mat-label>
+        <mat-select formControlName="tipoScadenza">
+            <mat-option 
+              *ngFor="let tipoScadenza of tipologieScadenza" 
+              [value]="tipoScadenza.codice">{{tipoScadenza.valore | translate}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+      <mat-form-field  appearance="outline">
+        <textarea matInput placeholder="{{'NOTE' | translate}}" formControlName="note"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <span class="fill-remaining-space"></span>
+      <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary" (click)="onClickConferma()">{{'CONFERMA' | translate}}</button>
+    </div>
+  </form>
+</mat-dialog-content>
