@@ -13,29 +13,7 @@ export class MessageService {
 
     constructor() { }
     
-    fetchResponse(response: HttpResponse<any>) {
-        
-        if (response.body) {
-            let mostraPopUp = !response.body.success;
-            if ((response.url.indexOf('new') >= 0) || (response.url.indexOf('update') >= 0) || (response.url.indexOf('delete') >= 0) || (response.url.indexOf('save') >= 0)) {
-                mostraPopUp = true;
-            }
-
-            let strMessage = response.body.message && response.body.message
-            .map(rec => rec['testo'])
-            
-            const objResponse: MessageState = {
-                success: response.body.success,
-                message: strMessage,
-                showDialog: mostraPopUp
-            }
-
-            if (strMessage && strMessage.length > 0 && mostraPopUp) {
-                this.show(objResponse); 
-            }
-        }
-    }
-
+    
     show(object: MessageState) {
         this.messageSubject.next((<MessageState> object))
     }

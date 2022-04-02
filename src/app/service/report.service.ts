@@ -20,4 +20,13 @@ export class ReportService {
         });
     }
     
+    stampaScadenzeArticoli(): any {
+        return this.http.post<Blob>(`/vvf/rpt/scadenze-articoli`, null, {observe: 'response', responseType: 'blob' as 'json'})
+        .subscribe((res) => {
+            let blob = new Blob([res.body], { type: 'application/pdf' });
+            let fileURL = URL.createObjectURL(blob);
+            window.open(fileURL);
+        });
+    }
+    
 }

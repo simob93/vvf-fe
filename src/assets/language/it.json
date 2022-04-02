@@ -102,7 +102,13 @@
     "TIPO_SCADENZA": "Tipo scadenza",
     "TIPO_SCADENZA_ARTICOLO_CONTROLLO": "Controllo",
     "TIPO_SCADENZA_ARTICOLO_FINE_VITA": "Fine vita",
-    "INSERIMENTO_SCADENZA": "Inserimento scadenza"
-    
+    "INSERIMENTO_SCADENZA": "Inserimento scadenza",
+    "RINNOVA_SCADENZA": "Rinnova scadenza",
+    "STORICO_RINNOVI": "Storico rinnovi",
+    "RIMUOVI_DALLA_SCADENZA": "Rimuovi dalla scadenza",
+    "EFFETTUATA": "Effettuata",
+    "SEGNA_COME_EFFETTUATA": "Imposta come effettuata",
+    "RIATTIVA_SCADENZA": "Riattiva scadenza",
+    "DATA_RINNOVO": "Data rinnovo"
 
 }

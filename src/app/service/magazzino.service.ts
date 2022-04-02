@@ -3,8 +3,11 @@ import {
     HttpClient
 } from '@angular/common/http';
 import { JsonResponse, Deposito, Articolo, Categoria, ArticoloCategoria, ArticoloDeposito } from '../model';
+import { KeyValuePeriodo } from '../model/KyeValuePeriodo';
 import 'moment/locale/it';
 import { ArticoliScadenzaList } from '../model/articoliScadenzaList';
+import { ArticoliScadenza } from '../model/articoliScadenza';
+import { ArticoliScadenzaRinnovo } from '../model/articoliScadenzaRinnovo';
 
 @Injectable({
     providedIn: 'root'
@@ -213,8 +216,67 @@ export class MagazzinoService {
         return this.http.post<JsonResponse<ArticoloDeposito>>('/vvf/mag/articoli/depositi/new',  articoliDepositi);
     }
 
-    listScadenzaArticoli() {
-        return this.http.get<JsonResponse<ArticoliScadenzaList>>('/vvf/mag/articoli/scadenza');
+    listScadenzaArticoli(object) {
+        return this.http.get<JsonResponse<ArticoliScadenzaList>>('/vvf/mag/articoli/scadenza', {
+            params: object
+        });
     }
-    
+    /**
+     * 
+     * @param object 
+     * @returns 
+     */
+    saveScadenzaArticolo(object) {
+        return this.http.post<JsonResponse<ArticoliScadenza>>('/vvf/mag/articoli/scadenza', object);
+    }
+    /**
+     * 
+     * @param scadenzaId 
+     * @param object 
+     * @returns 
+     */
+    modificaScadenzaArticolo(scadenzaId: number, object : ArticoliScadenza) {
+        return this.http.put<JsonResponse<ArticoliScadenza>>(`/vvf/mag/articoli/scadenza/${scadenzaId}`, object);
+    }
+    /**
+     * 
+     * @param scadenzaId 
+     * @param object 
+     * @returns 
+     */
+    effettuaScadenzaArticolo(scadenzaId: number) {
+        return this.http.put<JsonResponse<ArticoliScadenza>>(`/vvf/mag/articoli/scadenza/${scadenzaId}/effettua`, null);
+    }
+    /**
+     * 
+     * @param scadenzaId 
+     * @returns 
+     */
+    riattivaScadenzaArticolo(scadenzaId: number) {
+        return this.http.put<JsonResponse<ArticoliScadenza>>(`/vvf/mag/articoli/scadenza/${scadenzaId}/riattiva`, null);
+    }
+    /**
+     * 
+     * @param id 
+     * @param dataScadenzaNuova 
+     */
+    rinnovaScadenzaArticolo(scadenzaId: number, object : ArticoliScadenzaRinnovo) {
+        return this.http.post<JsonResponse<ArticoliScadenza>>(`/vvf/mag/articoli/scadenza/${scadenzaId}/rinnova`, object);
+    }
+    /**
+     * 
+     * @param scadenzaId 
+     * @returns 
+     */
+    eliminaScadenza(scadenzaId: number) {
+        return this.http.delete<JsonResponse<ArticoliScadenza>>(`/vvf/mag/articoli/scadenza/${scadenzaId}`);
+    }    
+    /**
+     * 
+     * @param scadenzaId 
+     * @returns 
+     */
+    storicoRinnovi(articoloId: number) {
+        return this.http.get<JsonResponse<KeyValuePeriodo[]>>(`/vvf/mag/articoli/${articoloId}/scadenza/storico-rinnovi`);
+    }    
 }

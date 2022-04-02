@@ -3,10 +3,11 @@
   <form [formGroup]="myForm" class="column_layout" style="width: 600px; margin-top: 0px;">
     <input matInput [hidden]="true" formControlName="id">
     <div class="column_layout" style="margin-top: 15px;">
-      <input hidden formControlName="articoloId">
+      <input hidden formControlName="scadenzaId">
       <mat-form-field appearance="outline" style="width: 400px;">
         <mat-label>{{'ARTICOLO' | translate}}</mat-label>
         <input type="text"
+              required
               placeholder="Seleziona articolo...."
               aria-label="Articolo"
               matInput
@@ -18,15 +19,15 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" style="width: 180px;">
         <mat-label>{{'DATA_SCADENZA' | translate}}</mat-label>
-        <input matInput [matDatepicker]="picker" placeholder="{{'DATA_SCADENZA' | translate}}" formControlName="dataScadenza">
+        <input matInput [matDatepicker]="picker" placeholder="{{'DATA_SCADENZA' | translate}}" formControlName="dataScadenza" required>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field appearance="outline" class="margin-right" style="width: 220px;">
         <mat-label>{{'TIPO_SCADENZA' | translate}}</mat-label>
-        <mat-select formControlName="tipoScadenza">
+        <mat-select formControlName="tipoScadenza" required>
             <mat-option 
               *ngFor="let tipoScadenza of tipologieScadenza" 
               [value]="tipoScadenza.codice">{{tipoScadenza.valore | translate}}
@@ -39,7 +40,7 @@
     </div>
     <div>
       <span class="fill-remaining-space"></span>
-      <button mat-raised-button [disabled]="myForm.invalid || !myForm.dirty" color="primary" (click)="onClickConferma()">{{'CONFERMA' | translate}}</button>
+      <button mat-raised-button [disabled]="myForm.invalid" color="primary" (click)="onClickConferma()">{{'CONFERMA' | translate}}</button>
     </div>
   </form>
 </mat-dialog-content>

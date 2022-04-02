@@ -115,6 +115,9 @@ import { PortletDotazioneComponent } from './portlet/portlet-dotazione/portlet-d
 import { ScadenzaArticoliPageComponent } from './magazzino/scadenza-articoli/scadenza-articoli-page/scadenza-articoli-page.component';
 import { ScadenzaArticoliFormComponent } from './magazzino/scadenza-articoli/scadenza-articoli-form/scadenza-articoli-form.component';
 import { ScadenzaArticoliListComponent } from './magazzino/scadenza-articoli/scadenza-articoli-list/scadenza-articoli-list.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { ScadenzaArticoliListStoricoComponent } from './magazzino/scadenza-articoli/scadenza-articoli-list-storico/scadenza-articoli-list-storico.component';
+
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/language/', '.json');
@@ -204,7 +207,8 @@ export function createTranslateLoader(http: HttpClient) {
         PortletDotazioneComponent,
         ScadenzaArticoliPageComponent,
         ScadenzaArticoliFormComponent,
-        ScadenzaArticoliListComponent
+        ScadenzaArticoliListComponent,
+        ScadenzaArticoliListStoricoComponent
     ],
     imports: [
         FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
@@ -251,7 +255,8 @@ export function createTranslateLoader(http: HttpClient) {
         MatTooltipModule,
         MatBadgeModule,
         MatMenuModule,
-        AvatarModule
+        AvatarModule,
+        MatSlideToggleModule
     ],
     entryComponents: [
         FormGradoComponent,
@@ -264,6 +269,7 @@ export function createTranslateLoader(http: HttpClient) {
         EditPermessoComponent,
         ProtocolloRicercaAvanzataComponent,
         ScadenzaArticoliFormComponent,
+        ScadenzaArticoliListStoricoComponent,
         DialogMessage
     ],
     providers: [

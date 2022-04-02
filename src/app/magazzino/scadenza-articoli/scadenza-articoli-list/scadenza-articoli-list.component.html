@@ -5,11 +5,77 @@
       <mat-icon aria-label="Nuova scadenza">add</mat-icon>
       {{'AGGIUNGI_SCADENZA' | translate}}
   </button>
+  <button mat-flat-button color="primary" style="margin-left: 5px;" (click)="stampa()">
+    <mat-icon aria-label="Stampa">print</mat-icon>
+    {{'STAMPA' | translate}}
+  </button>
 </div>
-<ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-material"
-  suppressLoadingOverlay
-  [getRowNodeId]="getRowNodeId"
-  [rowSelection]="'single'"
-  (gridReady)="onGridReady($event)"
-  [columnDefs]="displayedColumns">
-</ag-grid-angular>
+<mat-tab-group (selectedTabChange)="tabChange($event)">
+  <mat-tab label="Articoli in scadenza"></mat-tab>
+  <mat-tab label="Archivio"></mat-tab>
+</mat-tab-group>
+<div style="width: 100%; height: 90%;" >
+  <table mat-table [dataSource]="(listaScadenze$ | async)" style="width: 100%; overflow:auto;" >
+
+    <ng-container matColumnDef="info">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" style="width: 50px;">
+        <img  *ngIf="!isStorico"  width="24" height="24" alt="." src="assets/images/time-left-{{(element.alertScadenza == 1 ? 'green' : (element.alertScadenza == 0 ? 'orange' : 'red')) }}.svg" /> 
+        <img *ngIf="isStorico" width="24" height="24" alt="." src="assets/images/time-left-gray.svg" /> 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descrArticolo">
+      <th mat-header-cell *matHeaderCellDef style="flex: 1;"> {{'DESCRIZIONE' | translate}} </th>
+      <td mat-cell *matCellDef="let element" style="line-height: 2;"> {{element.descrArticolo}} <br> <p  *ngIf="element.note"><b>{{'NOTE' | translate}}:</b> {{element.note}}</p> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descrTipoScadenza">
+      <th mat-header-cell *matHeaderCellDef style="flex: 1;"> {{'TIPO_SCADENZA' | translate}} </th>
+      <td mat-cell *matCellDef="let element" style="line-height: 2;"> {{element.descrTipoScadenza}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataScadenza" >
+      <th mat-header-cell *matHeaderCellDef style="width: 100px; max-width: 100px;"> {{'DATA_SCADENZA' | translate}} </th>
+      <td mat-cell *matCellDef="let element" style="width: 100px; max-width: 100px;"> {{element.dataScadenza | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef ></th>
+      <td mat-cell *matCellDef="let element" style="text-align: right; width: 80px;">
+
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <div style="text-align: left;">
+            <button mat-menu-item (click)="rinnovaScadenza(element)" *ngIf="!isStorico">
+              <mat-icon>change_circle</mat-icon>
+              <span>{{'RINNOVA_SCADENZA' | translate}}</span>
+            </button>
+            <button mat-menu-item  (click)="effettua(element)" *ngIf="!isStorico">
+              <mat-icon>hide_source</mat-icon>
+              <span>{{'SEGNA_COME_EFFETTUATA' | translate}}</span>
+            </button>
+            <button mat-menu-item *ngIf="!isStorico" (click)="storicoRinnovi(element)" >
+              <mat-icon>history</mat-icon>
+              <span>{{'STORICO_RINNOVI' | translate}}</span>
+            </button>
+            <button mat-menu-item *ngIf="!isStorico" (click)="elimina(element)">
+              <mat-icon>delete</mat-icon>
+              <span>{{'ELIMINA' | translate}}</span>
+            </button>
+            <button mat-menu-item *ngIf="isStorico" (click)="riattiva(element)" >
+              <mat-icon>change_circle</mat-icon>
+              <span>{{'RIATTIVA_SCADENZA' | translate}}</span>
+            </button>
+          </div>
+        </mat-menu>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
