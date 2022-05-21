@@ -30,7 +30,6 @@ export class ArticoliPageComponent implements OnInit {
    * @param resp 
    */
   onAfterSave(resp) {
-    console.log(resp)
     this.articoliListCmp.loadGridData(resp.id);
   }
   /**

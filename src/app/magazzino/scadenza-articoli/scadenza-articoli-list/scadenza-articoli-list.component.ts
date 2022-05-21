@@ -3,6 +3,7 @@ import { MatDialog, MatTabChangeEvent } from '@angular/material';
 import { GetContextMenuItemsParams, MenuItemDef } from 'ag-grid-community';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { StandardMessageComponent } from 'src/app/common/standard-message/standard-message.component';
 import { ArticoliScadenza } from 'src/app/model/articoliScadenza';
 import { ArticoliScadenzaList } from 'src/app/model/articoliScadenzaList';
 import { MagazzinoService } from 'src/app/service/magazzino.service';
@@ -45,8 +46,17 @@ export class ScadenzaArticoliListComponent implements OnInit, OnDestroy {
     })
   }
   elimina(scadenza: ArticoliScadenzaList) {
-    this.magazzinoService.eliminaScadenza(scadenza.scadenzaId)
-      .subscribe(() => this.getScadenze());
+
+    this.dialog.open(StandardMessageComponent, {
+      data: {
+          type: 'DEL',
+          callbackOnOk: () => {
+            this.magazzinoService.eliminaScadenza(scadenza.scadenzaId)
+            .subscribe(() => this.getScadenze());
+          }
+      }
+  });
+
   }
   /**
    * 

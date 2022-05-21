@@ -15,6 +15,7 @@ import { JsonResponse } from '../model';
 })
 export class LoaderInterceptorService implements HttpInterceptor {
     mostraMessaggio: boolean = false;
+    showToast : boolean = false;
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -22,6 +23,7 @@ export class LoaderInterceptorService implements HttpInterceptor {
         private messageService: MessageService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.showLoader();
+        this.showToast = req.method == 'POST' || req.method == 'DELETE' ||  req.method == 'PUT' || req.url.indexOf("del") > 0;
         return next.handle(req.clone({
             setHeaders: {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
@@ -53,6 +55,10 @@ export class LoaderInterceptorService implements HttpInterceptor {
                     let resp = body as JsonResponse<any>;
                     if (!resp.success)
                         this.messageService.show({success: body.success, showDialog: !body.success, message: body.message.map(el => el.testo)});
+                    else if (this.showToast) {
+                        this.messageService.show({success: true, showDialog: false, message: "operazione eseguita con successo"});
+                    }
+                
                 }
             }
         }),finalize(() => this.onEnd()));

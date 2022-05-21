@@ -92,7 +92,7 @@ export class ArticoliFormComponent implements OnInit, OnDestroy {
                     filter(resp => resp.success)
                 )
                 .subscribe(resp => {
-                    this.afterSave.emit(resp.data);
+                    this.afterSave.emit({id});
                 });
         }
 
