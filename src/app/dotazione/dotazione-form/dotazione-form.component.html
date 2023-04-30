@@ -54,8 +54,8 @@
         <mat-form-field appearance="outline">
           <mat-label>{{'TAGLIA' | translate}}</mat-label>
           <mat-select formControlName="taglia">
-            <mat-option *ngFor="let taglia of elencoTaglie$ | async" [value]="taglia.extra">
-              {{taglia.valore}}
+            <mat-option *ngFor="let taglia of elencoTaglie$ | async" [value]="taglia.id">
+              {{taglia.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -1,15 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
-import { Articolo, Categoria, Dotazione } from 'src/app/model';
+import { Articolo, Categoria, Dotazione, Person } from 'src/app/model';
 import { MagazzinoService } from 'src/app/service/magazzino.service';
 import { mergeMap, map, distinctUntilChanged, filter, debounceTime, switchMap, reduce, takeUntil } from 'rxjs/operators';
-import { GeneralService, VigileService } from 'src/app/service';
+import { GeneralService, PersonService, VigileService } from 'src/app/service';
 import { formattaData, isValidID } from 'src/app/utils/functions';
 import { MessageService } from 'src/app/service/message.service';
 
 import { DATE_TIME_FORMAT_STANDARD } from 'src/app/utils/constant';
-import { KeyValue } from 'src/app/model/keyValue';
 import { ReportService } from 'src/app/service/report.service';
 import { StandardMessageComponent } from 'src/app/common/standard-message/standard-message.component';
 import { MatDialog } from '@angular/material';
@@ -22,7 +21,7 @@ import { MatDialog } from '@angular/material';
 export class DotazioneFormComponent implements OnInit {
     myForm: FormGroup;
     articoli$: Observable<Articolo[]> = null;
-    elencoTaglie$: Observable<KeyValue[]> = null;
+    elencoTaglie$: Observable<Person[]> = null;
     elencoCategorie$: Observable<Categoria[]> = null;
     @Input() idVigile: number;
 
@@ -30,6 +29,7 @@ export class DotazioneFormComponent implements OnInit {
     @Output('afterDelete') afterDelete: EventEmitter<any> = new EventEmitter<any>()
 
     constructor(
+        private personService: PersonService,
         private fb: FormBuilder,
         private dialog: MatDialog,
         private reportService: ReportService,
@@ -120,7 +120,8 @@ export class DotazioneFormComponent implements OnInit {
         if (isValidID(id)) {
             this.vigileService.updateDotazione(newRecord)
                 .pipe(
-                    filter(resp => resp.success)
+                    filter(resp => resp.success),
+                    switchMap(p => this.vigileService.getDotazioneById(id))
                 )
                 .subscribe(resp => {
                     this.afterSave.emit(resp.data)
@@ -168,10 +169,17 @@ export class DotazioneFormComponent implements OnInit {
             .pipe(
                 filter(resp => resp.success),
                 map(resp => resp.data),
-                switchMap(regDotazione => this.caricaDipendenze(regDotazione)),
-            ).subscribe(data => {
+                switchMap(regDotazione => this.magazzinoService.getArticolo(regDotazione.idArticolo)
+                .pipe(
+                    filter(resp => resp.success),
+                    map(resp => resp.data),
+                    map(articolo => {
+                        return Object.assign(regDotazione, { articolo: articolo })
+                    }))),
+            ).subscribe( (data : Dotazione)=> {
                 if (data != null) {
-                    this.myForm.patchValue(data[0], {
+                    data['taglia'] = Number(data['taglia']);
+                    this.myForm.patchValue(data, {
                         emitEvent: false
                     });
                 }
@@ -202,7 +210,7 @@ export class DotazioneFormComponent implements OnInit {
             taglia: [null],
             note: [null]
         })
-        this.elencoTaglie$ = this.generalService.listTaglieAbbigliamento().pipe(map(resp => resp.data));
+        this.elencoTaglie$ = this.personService.listByArea(11).pipe(map(p => p.data));
 
         this.elencoCategorie$ = this.magazzinoService.listCategorie().pipe(map(resp => resp.data));
 
