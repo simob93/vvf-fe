@@ -118,8 +118,8 @@ export class FormGradoComponent implements OnInit {
         this.myForm.patchValue(data);
 
         this.myForm.patchValue({
-            dalle: data.dal && moment.utc(data.dal).format('HH:mm'),
-            alle: data.al && moment.utc(data.al).format('HH:mm'),
+            dalle: data.dal && moment(data.dal).format('HH:mm'),
+            alle: data.al && moment(data.al).format('HH:mm'),
         });
     }
 

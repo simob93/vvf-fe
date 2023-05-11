@@ -5,7 +5,7 @@ import { Articolo, Categoria, Dotazione, Person } from 'src/app/model';
 import { MagazzinoService } from 'src/app/service/magazzino.service';
 import { mergeMap, map, distinctUntilChanged, filter, debounceTime, switchMap, reduce, takeUntil } from 'rxjs/operators';
 import { GeneralService, PersonService, VigileService } from 'src/app/service';
-import { formattaData, isValidID } from 'src/app/utils/functions';
+import { formattaData, isValidID, startOfDay } from 'src/app/utils/functions';
 import { MessageService } from 'src/app/service/message.service';
 
 import { DATE_TIME_FORMAT_STANDARD } from 'src/app/utils/constant';
@@ -101,7 +101,7 @@ export class DotazioneFormComponent implements OnInit {
     onClickBtnConferma() {
 
         const record = this.myForm.value;
-        const {
+        let {
             id,
             dataConsegna,
             articolo
@@ -114,6 +114,9 @@ export class DotazioneFormComponent implements OnInit {
 
         newRecord.idArticolo = articolo['id'];
         newRecord.idVigile = this.idVigile;
+
+        dataConsegna = startOfDay(dataConsegna, false);
+        
         newRecord.dataConsegna = formattaData(dataConsegna, DATE_TIME_FORMAT_STANDARD)
         delete newRecord.articolo;
 

@@ -23,7 +23,7 @@ export function convertiBoolean(object : any) {
 export function endOfDay(data: Date, nullIsToday = false) {
     let newDate = data != null ? data : nullIsToday ?  new Date() : null;
     if (newDate)
-        return moment(newDate).endOf('day').utc(true).toDate();
+        return moment(newDate).local().endOf('day').toDate();
     return null;
 }
 
@@ -33,7 +33,7 @@ export function endOfDay(data: Date, nullIsToday = false) {
 export function startOfDay(data: Date, nullIsToday = false) {
     let newDate = data != null ? data : nullIsToday ?  new Date() : null;
     if (newDate) {
-        return moment(newDate).startOf('day').utc(true).toDate();
+        return moment(newDate).local().startOf('day').toDate();
 
     }
     return null;
@@ -49,21 +49,21 @@ export function formattaData(data: any, format?: string) {
         format = DATE_TIME_FORMAT_STANDARD;
     }
     if (data) {
-        result = moment.utc(data).format(format);
+        result = moment(data).local().format(format);
     }
     return result;
 }
 
 export function sommaDataOra(data: Date, ora?: Date | string) :Date {
-    let d = data != null ? moment.utc(data) : moment();
-    let o = ora != null ? moment.utc(ora, 'HH:mm') : moment();
+    let d = data != null ? moment(data).local() : moment();
+    let o = ora != null ? moment(ora, 'HH:mm').local() : moment();
 
     d.set({
         hours: o.hours(),
         minutes: o.minutes(),
         seconds: o.seconds()
     });
-    return d.utc(true).toDate();
+    return d.toDate();
 }
 /**
  * 
