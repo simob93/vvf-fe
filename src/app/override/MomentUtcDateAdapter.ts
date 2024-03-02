@@ -24,10 +24,13 @@ export class MomentUtcDateAdapter extends MomentDateAdapter {
 
     let result = moment.utc({ year, month, date }).locale(this.locale);
 
+    result = result.startOf('day');
+
     // If the result isn't valid, the date must have been out of bounds for this month.
     if (!result.isValid()) {
       throw Error(`Invalid date "${date}" for month with index "${month}".`);
     }
+
 
     return result;
   }
