@@ -44,16 +44,16 @@
                             <mat-label>Telefono (Principale)</mat-label>
                             <input matInput placeholder="Telefono (Principale)" formControlName="phone">
                     </mat-form-field>
-                    <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="phones?.length >= 4" (click)="addCustomField(phones)" aria-label="Aggiungi campo telefono">
+                    <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="frmTelefoniAggiuntivi?.value?.length >= 4" (click)="addCustomField(frmTelefoniAggiuntivi)" aria-label="Aggiungi campo telefono">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
-                <div *ngFor="let control of phones.controls; index as i" formArrayName="extra_phone" style="display: flex;">
+                <div *ngFor="let control of frmTelefoniAggiuntivi.controls; index as i" formArrayName="extra_phone" style="display: flex;">
                     <mat-form-field appearance="outline" style="flex: 1;">
                         <mat-label>Telefono</mat-label>
-                        <input matInput placeholder="Telefono" [formControl]="phones.controls[i]">
+                        <input matInput placeholder="Telefono" [formControl]="control">
                     </mat-form-field>
-                    <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(phones, i)" aria-label="Elimina campo email">
+                    <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(frmTelefoniAggiuntivi, i)" aria-label="Elimina campo email">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <!--<button (click)="removeSkill(i)">X</button>-->
@@ -75,16 +75,16 @@
                     <mat-label>Email</mat-label>
                     <input matInput placeholder="Email" formControlName="mail" >
                 </mat-form-field>
-                <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="emails?.length >= 4" (click)="addCustomField(emails)" aria-label="Aggiungi campo email">
+                <button mat-mini-fab color="primary" style="margin-left: 5px;" [disabled]="frmEmailAggiuntive?.value?.length >= 4" (click)="addCustomField(frmEmailAggiuntive)" aria-label="Aggiungi campo email">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>      
-            <div *ngFor="let control of emails.controls; index as i" formArrayName="extra_mail" style="display: flex;">
+            <div *ngFor="let control of frmEmailAggiuntive.controls; index as i" formArrayName="extra_mail" style="display: flex;">
                 <mat-form-field appearance="outline" style="flex: 1;">
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" [formControl]="emails.controls[i]">
+                    <input matInput placeholder="Email" [formControl]="control">
                 </mat-form-field>
-                <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(emails, i)" aria-label="Elimina campo email">
+                <button mat-mini-fab color="warn" style="margin-left: 5px;" (click)="removeCustomField(frmEmailAggiuntive, i)" aria-label="Elimina campo email">
                     <mat-icon>delete</mat-icon>
                 </button>
                 <!--<button (click)="removeSkill(i)">X</button>-->

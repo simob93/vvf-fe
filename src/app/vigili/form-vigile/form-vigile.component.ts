@@ -43,8 +43,6 @@ export class FormVigileComponent implements OnInit, OnDestroy {
     listTown$: Observable<Array<Town>>;
     myForm: FormGroup;
     appoColor: string;
-    emails: FormArray = new FormArray([]);
-    phones: FormArray = new FormArray([]);
     private _destroyed: Subject<any> = new Subject<any>();
 
     messageEvent:Subject<any> = new Subject();
@@ -73,16 +71,18 @@ export class FormVigileComponent implements OnInit, OnDestroy {
             istatComune:          [],
             postalCode:           [],
             codPhone:             [],
-            extra_mail:           this.emails,
-            extra_phone:          this.phones
+            extra_mail:           new FormArray([]),
+            extra_phone:          new FormArray([])
         })
 
         this.store.select(state => state.detailVigiliReducer)
             .pipe(takeUntil(this._destroyed))
             .subscribe(result => {
                 this.state = result;
-                this.emails = new FormArray([]);
-                this.phones = new FormArray([]);
+
+                this.removeCustomField(this.frmEmailAggiuntive, null, true);
+                this.removeCustomField(this.frmTelefoniAggiuntivi, null, true);
+                
                 if (result.data) {
                     const {
                         extra_mail,
@@ -90,25 +90,44 @@ export class FormVigileComponent implements OnInit, OnDestroy {
                     } = result.data;
                     if (extra_mail && extra_mail.length > 0) {
                         for (let i = 0; i< extra_mail.length; i++) {
-                            this.emails.insert(0, new FormControl(extra_mail[i]));
+                            this.frmEmailAggiuntive.insert(0, new FormControl(extra_mail[i]));
                         }
                     }
                     if (extra_phone && extra_phone.length > 0) {
                         for (let i = 0; i< extra_phone.length; i++) {
-                            this.phones.insert(0, new FormControl(extra_phone[i]));
+                            this.frmTelefoniAggiuntivi.insert(0, new FormControl(extra_phone[i]));
                         }
                     }
                    this.myForm.patchValue(result.data);
                 }
             });
     }
+
+    get frmTelefoniAggiuntivi() {
+        return this.myForm.controls.extra_phone as FormArray
+    }
+
+    get frmEmailAggiuntive() {
+        return this.myForm.controls.extra_mail as FormArray
+    }
+
     /**
      * 
      * @param formArray 
      * @param indexToRemove 
      */
-    removeCustomField(formArray, indexToRemove) {
-        formArray.removeAt(indexToRemove);
+    removeCustomField(formArray : FormArray, indexToRemove, removeAll: boolean = false) {
+
+        if (removeAll) {
+            let i = 0;
+            while(i < formArray.controls.length) {
+                formArray.removeAt(i);
+                i++;
+            } 
+            
+        } else {
+            formArray.removeAt(indexToRemove);
+        }
     } 
     /**
      * 
@@ -156,6 +175,8 @@ export class FormVigileComponent implements OnInit, OnDestroy {
                 success: data['success'],
                 message: data['message']
             });
+
+            this.store.dispatch(new VigiliDetailAction.FetchingAction( vigile.id ));
         });
     }
     /**
